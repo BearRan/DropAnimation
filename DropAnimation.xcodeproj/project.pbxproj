@@ -1,0 +1,611 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0C48A6B8803993FA3AA1FA53 /* libPods-DropAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 769F7D2AFB3D679DB4F372DC /* libPods-DropAnimation.a */; };
+		1859AA2A1C746E4F00F7791A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1859AA291C746E4F00F7791A /* main.m */; };
+		1859AA2D1C746E4F00F7791A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1859AA2C1C746E4F00F7791A /* AppDelegate.m */; };
+		1859AA301C746E4F00F7791A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1859AA2F1C746E4F00F7791A /* ViewController.m */; };
+		1859AA331C746E4F00F7791A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1859AA311C746E4F00F7791A /* Main.storyboard */; };
+		1859AA351C746E4F00F7791A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1859AA341C746E4F00F7791A /* Assets.xcassets */; };
+		1859AA381C746E4F00F7791A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1859AA361C746E4F00F7791A /* LaunchScreen.storyboard */; };
+		1859AA431C746E4F00F7791A /* DropAnimationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1859AA421C746E4F00F7791A /* DropAnimationTests.m */; };
+		1859AA4E1C746E4F00F7791A /* DropAnimationUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1859AA4D1C746E4F00F7791A /* DropAnimationUITests.m */; };
+		18DCAB4B1C7471D6001DBB9D /* DropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCAB4A1C7471D6001DBB9D /* DropView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1859AA3F1C746E4F00F7791A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1859AA1D1C746E4F00F7791A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1859AA241C746E4F00F7791A;
+			remoteInfo = DropAnimation;
+		};
+		1859AA4A1C746E4F00F7791A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1859AA1D1C746E4F00F7791A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1859AA241C746E4F00F7791A;
+			remoteInfo = DropAnimation;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1859AA251C746E4F00F7791A /* DropAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DropAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1859AA291C746E4F00F7791A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1859AA2B1C746E4F00F7791A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1859AA2C1C746E4F00F7791A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1859AA2E1C746E4F00F7791A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		1859AA2F1C746E4F00F7791A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		1859AA321C746E4F00F7791A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1859AA341C746E4F00F7791A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1859AA371C746E4F00F7791A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1859AA391C746E4F00F7791A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1859AA3E1C746E4F00F7791A /* DropAnimationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DropAnimationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1859AA421C746E4F00F7791A /* DropAnimationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DropAnimationTests.m; sourceTree = "<group>"; };
+		1859AA441C746E4F00F7791A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1859AA491C746E4F00F7791A /* DropAnimationUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DropAnimationUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1859AA4D1C746E4F00F7791A /* DropAnimationUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DropAnimationUITests.m; sourceTree = "<group>"; };
+		1859AA4F1C746E4F00F7791A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18DCAB481C746F9D001DBB9D /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		18DCAB491C7471D6001DBB9D /* DropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropView.h; sourceTree = "<group>"; };
+		18DCAB4A1C7471D6001DBB9D /* DropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropView.m; sourceTree = "<group>"; };
+		769F7D2AFB3D679DB4F372DC /* libPods-DropAnimation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DropAnimation.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		858E8F1E56A2E03EAF6B9D90 /* Pods-DropAnimation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropAnimation.release.xcconfig"; path = "Pods/Target Support Files/Pods-DropAnimation/Pods-DropAnimation.release.xcconfig"; sourceTree = "<group>"; };
+		8A85B1D42E0513C0B9006267 /* Pods-DropAnimation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropAnimation.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DropAnimation/Pods-DropAnimation.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1859AA221C746E4F00F7791A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0C48A6B8803993FA3AA1FA53 /* libPods-DropAnimation.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1859AA3B1C746E4F00F7791A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1859AA461C746E4F00F7791A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1859AA1C1C746E4F00F7791A = {
+			isa = PBXGroup;
+			children = (
+				1859AA271C746E4F00F7791A /* DropAnimation */,
+				1859AA411C746E4F00F7791A /* DropAnimationTests */,
+				1859AA4C1C746E4F00F7791A /* DropAnimationUITests */,
+				1859AA261C746E4F00F7791A /* Products */,
+				78378633320937013FD699B5 /* Pods */,
+				68EBF455D60C123682507BF7 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		1859AA261C746E4F00F7791A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1859AA251C746E4F00F7791A /* DropAnimation.app */,
+				1859AA3E1C746E4F00F7791A /* DropAnimationTests.xctest */,
+				1859AA491C746E4F00F7791A /* DropAnimationUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1859AA271C746E4F00F7791A /* DropAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				1859AA2B1C746E4F00F7791A /* AppDelegate.h */,
+				1859AA2C1C746E4F00F7791A /* AppDelegate.m */,
+				1859AA2E1C746E4F00F7791A /* ViewController.h */,
+				1859AA2F1C746E4F00F7791A /* ViewController.m */,
+				18DCAB491C7471D6001DBB9D /* DropView.h */,
+				18DCAB4A1C7471D6001DBB9D /* DropView.m */,
+				18DCAB481C746F9D001DBB9D /* PrefixHeader.pch */,
+				1859AA311C746E4F00F7791A /* Main.storyboard */,
+				1859AA341C746E4F00F7791A /* Assets.xcassets */,
+				1859AA361C746E4F00F7791A /* LaunchScreen.storyboard */,
+				1859AA391C746E4F00F7791A /* Info.plist */,
+				1859AA281C746E4F00F7791A /* Supporting Files */,
+			);
+			path = DropAnimation;
+			sourceTree = "<group>";
+		};
+		1859AA281C746E4F00F7791A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1859AA291C746E4F00F7791A /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1859AA411C746E4F00F7791A /* DropAnimationTests */ = {
+			isa = PBXGroup;
+			children = (
+				1859AA421C746E4F00F7791A /* DropAnimationTests.m */,
+				1859AA441C746E4F00F7791A /* Info.plist */,
+			);
+			path = DropAnimationTests;
+			sourceTree = "<group>";
+		};
+		1859AA4C1C746E4F00F7791A /* DropAnimationUITests */ = {
+			isa = PBXGroup;
+			children = (
+				1859AA4D1C746E4F00F7791A /* DropAnimationUITests.m */,
+				1859AA4F1C746E4F00F7791A /* Info.plist */,
+			);
+			path = DropAnimationUITests;
+			sourceTree = "<group>";
+		};
+		68EBF455D60C123682507BF7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				769F7D2AFB3D679DB4F372DC /* libPods-DropAnimation.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		78378633320937013FD699B5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8A85B1D42E0513C0B9006267 /* Pods-DropAnimation.debug.xcconfig */,
+				858E8F1E56A2E03EAF6B9D90 /* Pods-DropAnimation.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1859AA241C746E4F00F7791A /* DropAnimation */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1859AA521C746E4F00F7791A /* Build configuration list for PBXNativeTarget "DropAnimation" */;
+			buildPhases = (
+				A3FEFB3E7817C0285AA4D28B /* Check Pods Manifest.lock */,
+				1859AA211C746E4F00F7791A /* Sources */,
+				1859AA221C746E4F00F7791A /* Frameworks */,
+				1859AA231C746E4F00F7791A /* Resources */,
+				FC3620859FC43F1C3C68E91E /* Embed Pods Frameworks */,
+				1BD4A75B3052755DF1560F87 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DropAnimation;
+			productName = DropAnimation;
+			productReference = 1859AA251C746E4F00F7791A /* DropAnimation.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1859AA3D1C746E4F00F7791A /* DropAnimationTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1859AA551C746E4F00F7791A /* Build configuration list for PBXNativeTarget "DropAnimationTests" */;
+			buildPhases = (
+				1859AA3A1C746E4F00F7791A /* Sources */,
+				1859AA3B1C746E4F00F7791A /* Frameworks */,
+				1859AA3C1C746E4F00F7791A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1859AA401C746E4F00F7791A /* PBXTargetDependency */,
+			);
+			name = DropAnimationTests;
+			productName = DropAnimationTests;
+			productReference = 1859AA3E1C746E4F00F7791A /* DropAnimationTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		1859AA481C746E4F00F7791A /* DropAnimationUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1859AA581C746E4F00F7791A /* Build configuration list for PBXNativeTarget "DropAnimationUITests" */;
+			buildPhases = (
+				1859AA451C746E4F00F7791A /* Sources */,
+				1859AA461C746E4F00F7791A /* Frameworks */,
+				1859AA471C746E4F00F7791A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1859AA4B1C746E4F00F7791A /* PBXTargetDependency */,
+			);
+			name = DropAnimationUITests;
+			productName = DropAnimationUITests;
+			productReference = 1859AA491C746E4F00F7791A /* DropAnimationUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1859AA1D1C746E4F00F7791A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = apple;
+				TargetAttributes = {
+					1859AA241C746E4F00F7791A = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+					1859AA3D1C746E4F00F7791A = {
+						CreatedOnToolsVersion = 7.1.1;
+						TestTargetID = 1859AA241C746E4F00F7791A;
+					};
+					1859AA481C746E4F00F7791A = {
+						CreatedOnToolsVersion = 7.1.1;
+						TestTargetID = 1859AA241C746E4F00F7791A;
+					};
+				};
+			};
+			buildConfigurationList = 1859AA201C746E4F00F7791A /* Build configuration list for PBXProject "DropAnimation" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1859AA1C1C746E4F00F7791A;
+			productRefGroup = 1859AA261C746E4F00F7791A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1859AA241C746E4F00F7791A /* DropAnimation */,
+				1859AA3D1C746E4F00F7791A /* DropAnimationTests */,
+				1859AA481C746E4F00F7791A /* DropAnimationUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1859AA231C746E4F00F7791A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1859AA381C746E4F00F7791A /* LaunchScreen.storyboard in Resources */,
+				1859AA351C746E4F00F7791A /* Assets.xcassets in Resources */,
+				1859AA331C746E4F00F7791A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1859AA3C1C746E4F00F7791A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1859AA471C746E4F00F7791A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1BD4A75B3052755DF1560F87 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DropAnimation/Pods-DropAnimation-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A3FEFB3E7817C0285AA4D28B /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		FC3620859FC43F1C3C68E91E /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DropAnimation/Pods-DropAnimation-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1859AA211C746E4F00F7791A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1859AA301C746E4F00F7791A /* ViewController.m in Sources */,
+				18DCAB4B1C7471D6001DBB9D /* DropView.m in Sources */,
+				1859AA2D1C746E4F00F7791A /* AppDelegate.m in Sources */,
+				1859AA2A1C746E4F00F7791A /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1859AA3A1C746E4F00F7791A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1859AA431C746E4F00F7791A /* DropAnimationTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1859AA451C746E4F00F7791A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1859AA4E1C746E4F00F7791A /* DropAnimationUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1859AA401C746E4F00F7791A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1859AA241C746E4F00F7791A /* DropAnimation */;
+			targetProxy = 1859AA3F1C746E4F00F7791A /* PBXContainerItemProxy */;
+		};
+		1859AA4B1C746E4F00F7791A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1859AA241C746E4F00F7791A /* DropAnimation */;
+			targetProxy = 1859AA4A1C746E4F00F7791A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1859AA311C746E4F00F7791A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1859AA321C746E4F00F7791A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		1859AA361C746E4F00F7791A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1859AA371C746E4F00F7791A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1859AA501C746E4F00F7791A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1859AA511C746E4F00F7791A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1859AA531C746E4F00F7791A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8A85B1D42E0513C0B9006267 /* Pods-DropAnimation.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/DropAnimation/PrefixHeader.pch";
+				INFOPLIST_FILE = DropAnimation/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuntu.text.DropAnimation;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1859AA541C746E4F00F7791A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 858E8F1E56A2E03EAF6B9D90 /* Pods-DropAnimation.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/DropAnimation/PrefixHeader.pch";
+				INFOPLIST_FILE = DropAnimation/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuntu.text.DropAnimation;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		1859AA561C746E4F00F7791A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = DropAnimationTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuntu.text.DropAnimationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DropAnimation.app/DropAnimation";
+			};
+			name = Debug;
+		};
+		1859AA571C746E4F00F7791A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = DropAnimationTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuntu.text.DropAnimationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DropAnimation.app/DropAnimation";
+			};
+			name = Release;
+		};
+		1859AA591C746E4F00F7791A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = DropAnimationUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuntu.text.DropAnimationUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = DropAnimation;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		1859AA5A1C746E4F00F7791A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = DropAnimationUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuntu.text.DropAnimationUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = DropAnimation;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1859AA201C746E4F00F7791A /* Build configuration list for PBXProject "DropAnimation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1859AA501C746E4F00F7791A /* Debug */,
+				1859AA511C746E4F00F7791A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1859AA521C746E4F00F7791A /* Build configuration list for PBXNativeTarget "DropAnimation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1859AA531C746E4F00F7791A /* Debug */,
+				1859AA541C746E4F00F7791A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1859AA551C746E4F00F7791A /* Build configuration list for PBXNativeTarget "DropAnimationTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1859AA561C746E4F00F7791A /* Debug */,
+				1859AA571C746E4F00F7791A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1859AA581C746E4F00F7791A /* Build configuration list for PBXNativeTarget "DropAnimationUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1859AA591C746E4F00F7791A /* Debug */,
+				1859AA5A1C746E4F00F7791A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1859AA1D1C746E4F00F7791A /* Project object */;
+}
