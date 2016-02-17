@@ -37,7 +37,7 @@
 
 - (void)createSmallDrop
 {
-    CGFloat smallDrop_width = 6;
+    CGFloat smallDrop_width = 50;
     _smallDrop = [[DropView alloc] initWithFrame:CGRectMake(0, 0, smallDrop_width, smallDrop_width)];
     _smallDrop.dropShapLayer.fillColor = [UIColor redColor].CGColor;
     [_mainDrop addSubview:_smallDrop];
