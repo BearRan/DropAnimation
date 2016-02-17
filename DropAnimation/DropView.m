@@ -25,7 +25,6 @@
 - (void)createDropShapeLayer
 {
     _dropShapLayer = [CAShapeLayer layer];
-    _dropShapLayer.fillColor = [UIColor orangeColor].CGColor;
     [self.layer addSublayer:_dropShapLayer];
     
     _bezierPath = [UIBezierPath bezierPath];

@@ -12,7 +12,7 @@
 @interface ViewController ()
 
 @property (strong, nonatomic) DropView      *mainDrop;
-@property (strong, nonatomic) UIView        *pointView;
+@property (strong, nonatomic) DropView      *smallDrop;
 
 @end
 
@@ -22,7 +22,7 @@
     [super viewDidLoad];
     
     [self createMainDrop];
-    [self createPointView];
+    [self createSmallDrop];
     [self createPanGesture];
 }
 
@@ -30,18 +30,18 @@
 {
     CGFloat mainDrop_width = 150;
     _mainDrop = [[DropView alloc] initWithFrame:CGRectMake(0, 0, mainDrop_width, mainDrop_width)];
+    _mainDrop.dropShapLayer.fillColor = [UIColor orangeColor].CGColor;
     [self.view addSubview:_mainDrop];
     [_mainDrop BearSetCenterToParentViewWithAxis:kAXIS_X_Y];
 }
 
-- (void)createPointView
+- (void)createSmallDrop
 {
-    CGFloat pointView_width = 6;
-    _pointView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, pointView_width, pointView_width)];
-    _pointView.backgroundColor = [UIColor redColor];
-    _pointView.layer.cornerRadius = pointView_width/2;
-    [_mainDrop addSubview:_pointView];
-    [_pointView BearSetCenterToParentViewWithAxis:kAXIS_X_Y];
+    CGFloat smallDrop_width = 6;
+    _smallDrop = [[DropView alloc] initWithFrame:CGRectMake(0, 0, smallDrop_width, smallDrop_width)];
+    _smallDrop.dropShapLayer.fillColor = [UIColor redColor].CGColor;
+    [_mainDrop addSubview:_smallDrop];
+    [_smallDrop BearSetCenterToParentViewWithAxis:kAXIS_X_Y];
 }
 
 - (void)createPanGesture
@@ -55,7 +55,7 @@
     if (panGesture.state == UIGestureRecognizerStateChanged) {
         
         CGPoint tempPoint = [panGesture locationInView:_mainDrop];
-        _pointView.center = tempPoint;
+        _smallDrop.center = tempPoint;
     }
     else if(panGesture.state == UIGestureRecognizerStateEnded){
         
@@ -65,12 +65,17 @@
               initialSpringVelocity:0
                             options:UIViewAnimationOptionCurveEaseInOut
                          animations:^{
-                             [_pointView BearSetCenterToParentViewWithAxis:kAXIS_X_Y];
+                             [_smallDrop BearSetCenterToParentViewWithAxis:kAXIS_X_Y];
                          }
                          completion:^(BOOL finished) {
                              
                          }];
     }
+    
+}
+
+- (void)updateMainDropPath
+{
     
 }
 
