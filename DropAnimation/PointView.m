@@ -44,12 +44,4 @@
     [_titleLabel BearSetRelativeLayoutWithDirection:kDIR_UP destinationView:nil parentRelation:YES distance:5 center:YES];
 }
 
-@synthesize locationPoint = _locationPoint;
-- (void)setLocationPoint:(CGPoint)locationPoint
-{
-    _locationPoint = locationPoint;
-    
-    self.center = locationPoint;
-}
-
 @end

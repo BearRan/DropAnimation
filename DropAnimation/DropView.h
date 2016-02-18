@@ -15,4 +15,6 @@
 @property (strong, nonatomic) UIBezierPath  *bezierPath;
 @property (strong, nonatomic) PointView     *centerPointView;
 
+- (instancetype)initWithFrame:(CGRect)frame createSmallDrop:(BOOL)createSmallDrop;
+
 @end

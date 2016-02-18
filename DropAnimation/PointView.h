@@ -11,7 +11,6 @@
 @interface PointView : UIView
 
 @property (strong, nonatomic) NSString *titleStr;
-@property (assign, nonatomic) CGPoint   locationPoint;
 
 - (instancetype)initWithPoint:(CGPoint)point;
 
