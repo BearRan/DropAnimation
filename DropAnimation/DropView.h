@@ -11,9 +11,10 @@
 
 @interface DropView : UIView
 
-@property (strong, nonatomic) CAShapeLayer  *dropShapLayer;
-@property (strong, nonatomic) UIBezierPath  *bezierPath;
-@property (strong, nonatomic) PointView     *centerPointView;
+@property (strong, nonatomic) UIColor   *fillColor;
+@property (assign, nonatomic) CGPoint   center_point;
+@property (assign, nonatomic) CGPoint   edge_point1;
+@property (assign, nonatomic) CGPoint   edge_point2;
 
 - (instancetype)initWithFrame:(CGRect)frame createSmallDrop:(BOOL)createSmallDrop;
 

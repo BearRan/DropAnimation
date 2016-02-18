@@ -28,7 +28,7 @@
 {
     CGFloat mainDrop_width = 150;
     _mainDrop = [[DropView alloc] initWithFrame:CGRectMake(0, 0, mainDrop_width, mainDrop_width) createSmallDrop:YES];
-    _mainDrop.dropShapLayer.fillColor = [UIColor orangeColor].CGColor;
+    _mainDrop.fillColor = [UIColor orangeColor];
     [self.view addSubview:_mainDrop];
     [_mainDrop BearSetCenterToParentViewWithAxis:kAXIS_X_Y];
 }
