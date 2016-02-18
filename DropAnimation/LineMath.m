@@ -24,4 +24,15 @@
     return self;
 }
 
++ (CGFloat)calucateDistanceBetweenPoint1:(CGPoint)point1 withPoint2:(CGPoint)point2
+{
+    CGFloat x_dx    = (point2.x - point1.x);
+    CGFloat X_DX2   = x_dx * x_dx;
+    CGFloat y_dy    = (point2.y - point1.y);
+    CGFloat Y_DY2   = y_dy * y_dy;
+    CGFloat distance = sqrt(X_DX2 + Y_DY2);
+    
+    return distance;
+}
+
 @end

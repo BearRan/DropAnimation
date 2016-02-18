@@ -17,7 +17,8 @@
 @property (assign, nonatomic) CGPoint   edge_point1;
 @property (assign, nonatomic) CGPoint   edge_point2;
 
-@property (assign, nonatomic) DropCanvasView *dropSuperView;
+@property (strong, nonatomic) DropView          *smallDrop;
+@property (assign, nonatomic) DropCanvasView    *dropSuperView;
 
 - (instancetype)initWithFrame:(CGRect)frame createSmallDrop:(BOOL)createSmallDrop;
 

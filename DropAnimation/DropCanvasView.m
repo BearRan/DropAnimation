@@ -17,18 +17,6 @@
 
 @implementation DropCanvasView
 
-- (void)drawRect:(CGRect)rect
-{
-    [super drawRect:rect];
-    
-    for (LineMath *lineMath in _lineArray) {
-        CGPoint point1 = [lineMath.InView convertPoint:lineMath.point1 toView:self];
-        CGPoint point2 = [lineMath.InView convertPoint:lineMath.point2 toView:self];
-        [self drawLineWithLayer:point1 endPoint:point2 lineWidth:1.0f lineColor:[UIColor blackColor]];
-    }
-    NSLog(@"--1");
-}
-
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -54,4 +42,34 @@
     [_mainDrop BearSetCenterToParentViewWithAxis:kAXIS_X_Y];
 }
 
+- (void)drawRect:(CGRect)rect
+{
+    [super drawRect:rect];
+    
+    for (LineMath *lineMath in _lineArray) {
+        CGPoint point1 = [lineMath.InView convertPoint:lineMath.point1 toView:self];
+        CGPoint point2 = [lineMath.InView convertPoint:lineMath.point2 toView:self];
+        [self drawLineWithLayer:point1 endPoint:point2 lineWidth:1.0f lineColor:[UIColor blackColor]];
+    }
+    
+    [self drawDropViewAssistant:_mainDrop];
+}
+
+- (void)drawDropViewAssistant:(DropView *)dropView
+{
+    CGPoint mainDrop_center = dropView.center;
+    CGPoint smallDrop_center = [dropView convertPoint:dropView.smallDrop.center toView:self];
+    
+    //  绘制主DropView
+    CGFloat centerDistance = [LineMath calucateDistanceBetweenPoint1:mainDrop_center withPoint2:smallDrop_center];
+    if (centerDistance > (dropView.width - dropView.smallDrop.width)/2) {
+        NSLog(@"超出");
+    }else{
+        NSLog(@"在里面");
+    }
+}
+
 @end
+
+
+

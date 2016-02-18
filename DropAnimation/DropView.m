@@ -16,8 +16,6 @@
 @property (strong, nonatomic) CADisplayLink *displayLink;
 @property (strong, nonatomic) PointView     *centerPointView;
 
-@property (strong, nonatomic) DropView              *smallDrop;
-
 @end
 
 @implementation DropView
@@ -137,6 +135,7 @@
 {
     _fillColor = fillColor;
     _dropShapLayer.fillColor = fillColor.CGColor;
+    self.alpha = 0.5;
 }
 
 @end
