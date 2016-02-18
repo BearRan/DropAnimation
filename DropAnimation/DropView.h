@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PointView.h"
+#import "DropCanvasView.h"
 
 @interface DropView : UIView
 
@@ -15,6 +16,8 @@
 @property (assign, nonatomic) CGPoint   center_point;
 @property (assign, nonatomic) CGPoint   edge_point1;
 @property (assign, nonatomic) CGPoint   edge_point2;
+
+@property (assign, nonatomic) DropCanvasView *dropSuperView;
 
 - (instancetype)initWithFrame:(CGRect)frame createSmallDrop:(BOOL)createSmallDrop;
 

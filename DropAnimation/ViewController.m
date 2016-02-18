@@ -7,12 +7,9 @@
 //
 
 #import "ViewController.h"
-#import "DropView.h"
+#import "DropCanvasView.h"
 
 @interface ViewController ()
-
-@property (strong, nonatomic) DropView      *mainDrop;
-@property (strong, nonatomic) DropView      *smallDrop;
 
 @end
 
@@ -21,16 +18,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self createMainDrop];
-}
-
-- (void)createMainDrop
-{
-    CGFloat mainDrop_width = 150;
-    _mainDrop = [[DropView alloc] initWithFrame:CGRectMake(0, 0, mainDrop_width, mainDrop_width) createSmallDrop:YES];
-    _mainDrop.fillColor = [UIColor orangeColor];
-    [self.view addSubview:_mainDrop];
-    [_mainDrop BearSetCenterToParentViewWithAxis:kAXIS_X_Y];
+    DropCanvasView *dropCanvasView = [[DropCanvasView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:dropCanvasView];
 }
 
 - (void)didReceiveMemoryWarning {

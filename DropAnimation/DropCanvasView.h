@@ -1,5 +1,5 @@
 //
-//  AssistantCanvasView.h
+//  DropCanvasView.h
 //  DropAnimation
 //
 //  Created by apple on 16/2/18.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AssistantCanvasView : UIView
+@interface DropCanvasView : UIView
 
-@property (strong, nonatomic) NSMutableArray *lineArray;
+@property (strong, nonatomic) NSMutableArray    *lineArray;
 
 @end

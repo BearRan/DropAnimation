@@ -7,7 +7,6 @@
 //
 
 #import "DropView.h"
-#import "AssistantCanvasView.h"
 #import "LineMath.h"
 
 @interface DropView()
@@ -18,31 +17,10 @@
 @property (strong, nonatomic) PointView     *centerPointView;
 
 @property (strong, nonatomic) DropView              *smallDrop;
-@property (strong, nonatomic) AssistantCanvasView   *assistantCanvasView;
-@property (assign, nonatomic) BOOL                  createSmallDrop;
 
 @end
 
 @implementation DropView
-
-
-- (void)drawRect:(CGRect)rect
-{
-    if (_createSmallDrop == YES) {
-        [self createAssistantCanvas];
-    }
-}
-
-- (void)createAssistantCanvas
-{
-    if (!_assistantCanvasView) {
-        UIView *superView = [self superview];
-        _assistantCanvasView = [[AssistantCanvasView alloc] initWithFrame:superView.bounds];
-        _assistantCanvasView.backgroundColor = [UIColor clearColor];
-        _assistantCanvasView.userInteractionEnabled = NO;
-        [superView addSubview:_assistantCanvasView];
-    }
-}
 
 
 - (instancetype)initWithFrame:(CGRect)frame createSmallDrop:(BOOL)createSmallDrop
@@ -56,11 +34,15 @@
     [self createDropView];
     [self createCenterPointView];
     
-    _createSmallDrop = createSmallDrop;
-    if (_createSmallDrop == YES) {
+    if (createSmallDrop == YES) {
         [self createSmallDropView];
         [self createPanGesture];
     }
+    
+    self.layer.masksToBounds = NO;
+    self.clipsToBounds = NO;
+    
+    
     
     return self;
 }
@@ -74,7 +56,7 @@
     [_bezierPath addArcWithCenter:CGPointMake(self.centerX, self.centerY) radius:self.width/2 startAngle:0 endAngle:2 * M_PI clockwise:YES];
     _dropShapLayer.path = _bezierPath.CGPath;
     
-    _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateAssistantCanvas)];
+    _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(calucateCoordinate)];
     [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
     _displayLink.paused = YES;
 }
@@ -106,7 +88,7 @@
         
         CGPoint tempPoint = [panGesture locationInView:self];
         _smallDrop.center = tempPoint;
-        [self updateAssistantCanvas];
+        [self calucateCoordinate];
     }
     else if(panGesture.state == UIGestureRecognizerStateEnded){
         
@@ -118,7 +100,6 @@
                          animations:^{
                              [_smallDrop BearSetCenterToParentViewWithAxis:kAXIS_X_Y];
                              _displayLink.paused = NO;
-                             [self updateAssistantCanvas];
                          }
                          completion:^(BOOL finished) {
                              _displayLink.paused = YES;
@@ -126,17 +107,28 @@
     }
 }
 
+- (void)calucateCoordinate
+{
+    //BigDrop
+    _center_point = CGPointMake(self.width/2, self.height/2);
+    
+    
+    //SmallDrop
+    
+    
+    [self updateAssistantCanvas];
+}
 
 - (void)updateAssistantCanvas
 {
-    [_assistantCanvasView.lineArray removeAllObjects];
+    [_dropSuperView.lineArray removeAllObjects];
     
     _center_point = CGPointMake(self.width/2, self.height/2);
     CALayer *smallDrop_layer = _smallDrop.layer.presentationLayer;
     LineMath *lineCenter2Center = [[LineMath alloc] initWithPoint1:_center_point point2:smallDrop_layer.position inView:self];
-    [_assistantCanvasView.lineArray addObject:lineCenter2Center];
+    [_dropSuperView.lineArray addObject:lineCenter2Center];
     
-    [_assistantCanvasView setNeedsDisplay];
+    [_dropSuperView setNeedsDisplay];
 }
 
 
