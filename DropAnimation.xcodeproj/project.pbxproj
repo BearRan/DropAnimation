@@ -16,6 +16,7 @@
 		1859AA381C746E4F00F7791A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1859AA361C746E4F00F7791A /* LaunchScreen.storyboard */; };
 		1859AA431C746E4F00F7791A /* DropAnimationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1859AA421C746E4F00F7791A /* DropAnimationTests.m */; };
 		1859AA4E1C746E4F00F7791A /* DropAnimationUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1859AA4D1C746E4F00F7791A /* DropAnimationUITests.m */; };
+		189FF3F01C755546001D7ED8 /* PointView.m in Sources */ = {isa = PBXBuildFile; fileRef = 189FF3EF1C755546001D7ED8 /* PointView.m */; };
 		18DCAB4B1C7471D6001DBB9D /* DropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCAB4A1C7471D6001DBB9D /* DropView.m */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +54,8 @@
 		1859AA491C746E4F00F7791A /* DropAnimationUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DropAnimationUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1859AA4D1C746E4F00F7791A /* DropAnimationUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DropAnimationUITests.m; sourceTree = "<group>"; };
 		1859AA4F1C746E4F00F7791A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		189FF3EE1C755546001D7ED8 /* PointView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointView.h; sourceTree = "<group>"; };
+		189FF3EF1C755546001D7ED8 /* PointView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointView.m; sourceTree = "<group>"; };
 		18DCAB481C746F9D001DBB9D /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		18DCAB491C7471D6001DBB9D /* DropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropView.h; sourceTree = "<group>"; };
 		18DCAB4A1C7471D6001DBB9D /* DropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropView.m; sourceTree = "<group>"; };
@@ -118,6 +121,8 @@
 				1859AA2F1C746E4F00F7791A /* ViewController.m */,
 				18DCAB491C7471D6001DBB9D /* DropView.h */,
 				18DCAB4A1C7471D6001DBB9D /* DropView.m */,
+				189FF3EE1C755546001D7ED8 /* PointView.h */,
+				189FF3EF1C755546001D7ED8 /* PointView.m */,
 				18DCAB481C746F9D001DBB9D /* PrefixHeader.pch */,
 				1859AA311C746E4F00F7791A /* Main.storyboard */,
 				1859AA341C746E4F00F7791A /* Assets.xcassets */,
@@ -241,6 +246,7 @@
 				TargetAttributes = {
 					1859AA241C746E4F00F7791A = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = VT6HKJNGDV;
 					};
 					1859AA3D1C746E4F00F7791A = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -355,6 +361,7 @@
 				1859AA301C746E4F00F7791A /* ViewController.m in Sources */,
 				18DCAB4B1C7471D6001DBB9D /* DropView.m in Sources */,
 				1859AA2D1C746E4F00F7791A /* AppDelegate.m in Sources */,
+				189FF3F01C755546001D7ED8 /* PointView.m in Sources */,
 				1859AA2A1C746E4F00F7791A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -497,6 +504,7 @@
 			baseConfigurationReference = 8A85B1D42E0513C0B9006267 /* Pods-DropAnimation.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/DropAnimation/PrefixHeader.pch";
 				INFOPLIST_FILE = DropAnimation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -510,6 +518,7 @@
 			baseConfigurationReference = 858E8F1E56A2E03EAF6B9D90 /* Pods-DropAnimation.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/DropAnimation/PrefixHeader.pch";
 				INFOPLIST_FILE = DropAnimation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

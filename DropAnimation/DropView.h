@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PointView.h"
 
 @interface DropView : UIView
 
-@property (strong, nonatomic) CAShapeLayer *dropShapLayer;
-@property (strong, nonatomic) UIBezierPath *bezierPath;
+@property (strong, nonatomic) CAShapeLayer  *dropShapLayer;
+@property (strong, nonatomic) UIBezierPath  *bezierPath;
+@property (strong, nonatomic) PointView     *centerPointView;
 
 @end

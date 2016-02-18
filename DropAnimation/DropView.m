@@ -8,6 +8,7 @@
 
 #import "DropView.h"
 
+
 @implementation DropView
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -18,8 +19,15 @@
     }
     
     [self createDropShapeLayer];
+    [self createCenterPointView];
     
     return self;
+}
+
+- (void)createCenterPointView
+{
+    _centerPointView = [[PointView alloc] initWithPoint:CGPointMake(self.width/2, self.height/2)];
+    [self addSubview:_centerPointView];
 }
 
 - (void)createDropShapeLayer
