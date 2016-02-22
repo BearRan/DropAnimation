@@ -15,6 +15,7 @@
 
 @end
 
+
 @implementation DropCanvasView
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -24,9 +25,11 @@
         self = nil;
     }
     
-    self.backgroundColor = [UIColor clearColor];
-    _lineArray = [[NSMutableArray alloc] init];
+    _assistantView = [[AssistantView alloc] initWithFrame:frame];
+    _assistantView.backgroundColor = [UIColor colorWithRed:0.2 green:0.5 blue:0.2 alpha:0.2];
+    [self addSubview:_assistantView];
     
+    self.backgroundColor = [UIColor clearColor];
     [self createMainDrop];
     
     return self;
@@ -36,7 +39,6 @@
 {
     CGFloat mainDrop_width = 150;
     _mainDrop = [[DropView alloc] initWithFrame:CGRectMake(0, 0, mainDrop_width, mainDrop_width) createSmallDrop:YES];
-    _mainDrop.fillColor = [UIColor orangeColor];
     _mainDrop.dropSuperView = self;
     [self addSubview:_mainDrop];
     [_mainDrop BearSetCenterToParentViewWithAxis:kAXIS_X_Y];
@@ -46,16 +48,11 @@
 {
     [super drawRect:rect];
     
-    for (LineMath *lineMath in _lineArray) {
-        CGPoint point1 = [lineMath.InView convertPoint:lineMath.point1 toView:self];
-        CGPoint point2 = [lineMath.InView convertPoint:lineMath.point2 toView:self];
-        [self drawLineWithLayer:point1 endPoint:point2 lineWidth:1.0f lineColor:[UIColor blackColor]];
-    }
-    
-    [self drawDropViewAssistant:_mainDrop];
+    [self.assistantView setNeedsDisplay];
+    [self drawDropView:_mainDrop];
 }
 
-- (void)drawDropViewAssistant:(DropView *)dropView
+- (void)drawDropView:(DropView *)dropView
 {
     CGPoint mainDrop_center = dropView.center;
     CGPoint smallDrop_center = [dropView convertPoint:dropView.smallDrop.center toView:self];
@@ -66,6 +63,11 @@
         NSLog(@"超出");
     }else{
         NSLog(@"在里面");
+        [dropView.bezierPath addArcWithCenter:mainDrop_center radius:dropView.width/2 startAngle:0 endAngle:2 * M_PI clockwise:YES];
+        dropView.dropShapLayer.path = dropView.bezierPath.CGPath;
+        dropView.fillColor = [UIColor orangeColor];
+        
+        [self.layer addSublayer:dropView.dropShapLayer];
     }
 }
 

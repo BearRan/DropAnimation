@@ -11,8 +11,6 @@
 
 @interface DropView()
 
-@property (strong, nonatomic) CAShapeLayer  *dropShapLayer;
-@property (strong, nonatomic) UIBezierPath  *bezierPath;
 @property (strong, nonatomic) CADisplayLink *displayLink;
 @property (strong, nonatomic) PointView     *centerPointView;
 
@@ -51,7 +49,7 @@
     [self.layer addSublayer:_dropShapLayer];
     
     _bezierPath = [UIBezierPath bezierPath];
-    [_bezierPath addArcWithCenter:CGPointMake(self.centerX, self.centerY) radius:self.width/2 startAngle:0 endAngle:2 * M_PI clockwise:YES];
+//    [_bezierPath addArcWithCenter:CGPointMake(self.centerX, self.centerY) radius:self.width/2 startAngle:0 endAngle:2 * M_PI clockwise:YES];
     _dropShapLayer.path = _bezierPath.CGPath;
     
     _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(calucateCoordinate)];
@@ -119,12 +117,12 @@
 
 - (void)updateAssistantCanvas
 {
-    [_dropSuperView.lineArray removeAllObjects];
+    [_dropSuperView.assistantView.lineArray removeAllObjects];
     
     _center_point = CGPointMake(self.width/2, self.height/2);
     CALayer *smallDrop_layer = _smallDrop.layer.presentationLayer;
     LineMath *lineCenter2Center = [[LineMath alloc] initWithPoint1:_center_point point2:smallDrop_layer.position inView:self];
-    [_dropSuperView.lineArray addObject:lineCenter2Center];
+    [_dropSuperView.assistantView.lineArray addObject:lineCenter2Center];
     
     [_dropSuperView setNeedsDisplay];
 }
@@ -135,7 +133,7 @@
 {
     _fillColor = fillColor;
     _dropShapLayer.fillColor = fillColor.CGColor;
-    self.alpha = 0.5;
+//    self.alpha = 0.5;
 }
 
 @end

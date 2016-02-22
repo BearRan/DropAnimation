@@ -20,6 +20,9 @@
 @property (strong, nonatomic) DropView          *smallDrop;
 @property (assign, nonatomic) DropCanvasView    *dropSuperView;
 
+@property (strong, nonatomic) CAShapeLayer  *dropShapLayer;
+@property (strong, nonatomic) UIBezierPath  *bezierPath;
+
 - (instancetype)initWithFrame:(CGRect)frame createSmallDrop:(BOOL)createSmallDrop;
 
 @end
