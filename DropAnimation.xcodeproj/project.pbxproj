@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		09C949521C7B3C4D00E98556 /* AssistantView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C949511C7B3C4D00E98556 /* AssistantView.m */; };
 		0C48A6B8803993FA3AA1FA53 /* libPods-DropAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 769F7D2AFB3D679DB4F372DC /* libPods-DropAnimation.a */; };
 		1859AA2A1C746E4F00F7791A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1859AA291C746E4F00F7791A /* main.m */; };
 		1859AA2D1C746E4F00F7791A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1859AA2C1C746E4F00F7791A /* AppDelegate.m */; };
@@ -41,8 +40,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		09C949501C7B3C4D00E98556 /* AssistantView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssistantView.h; sourceTree = "<group>"; };
-		09C949511C7B3C4D00E98556 /* AssistantView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssistantView.m; sourceTree = "<group>"; };
 		1859AA251C746E4F00F7791A /* DropAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DropAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1859AA291C746E4F00F7791A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1859AA2B1C746E4F00F7791A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -130,8 +127,6 @@
 				1859AA2F1C746E4F00F7791A /* ViewController.m */,
 				189FF3F71C7593B3001D7ED8 /* DropCanvasView.h */,
 				189FF3F81C7593B3001D7ED8 /* DropCanvasView.m */,
-				09C949501C7B3C4D00E98556 /* AssistantView.h */,
-				09C949511C7B3C4D00E98556 /* AssistantView.m */,
 				18DCAB491C7471D6001DBB9D /* DropView.h */,
 				18DCAB4A1C7471D6001DBB9D /* DropView.m */,
 				189FF3F41C756A99001D7ED8 /* LineMath.h */,
@@ -380,7 +375,6 @@
 				189FF3F61C756A99001D7ED8 /* LineMath.m in Sources */,
 				1859AA2A1C746E4F00F7791A /* main.m in Sources */,
 				189FF3F91C7593B3001D7ED8 /* DropCanvasView.m in Sources */,
-				09C949521C7B3C4D00E98556 /* AssistantView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

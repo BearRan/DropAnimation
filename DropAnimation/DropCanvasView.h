@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AssistantView.h"
 
 @interface DropCanvasView : UIView
 
-@property (strong, nonatomic) AssistantView     *assistantView;
+@property (strong, nonatomic) NSMutableArray    *lineArray;
 
 @end

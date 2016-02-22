@@ -25,10 +25,7 @@
         self = nil;
     }
     
-    _assistantView = [[AssistantView alloc] initWithFrame:frame];
-    _assistantView.backgroundColor = [UIColor colorWithRed:0.2 green:0.5 blue:0.2 alpha:0.2];
-    [self addSubview:_assistantView];
-    
+    _lineArray = [[NSMutableArray alloc] init];
     self.backgroundColor = [UIColor clearColor];
     [self createMainDrop];
     
@@ -48,7 +45,7 @@
 {
     [super drawRect:rect];
     
-    [self.assistantView setNeedsDisplay];
+//    [self.assistantView setNeedsDisplay];
     [self drawDropView:_mainDrop];
 }
 
@@ -65,9 +62,16 @@
         NSLog(@"在里面");
         [dropView.bezierPath addArcWithCenter:mainDrop_center radius:dropView.width/2 startAngle:0 endAngle:2 * M_PI clockwise:YES];
         dropView.dropShapLayer.path = dropView.bezierPath.CGPath;
-        dropView.fillColor = [UIColor orangeColor];
+        dropView.fillColor = [UIColor colorWithRed:0.9 green:0.7 blue:0.2 alpha:0.5];
+        
         
         [self.layer addSublayer:dropView.dropShapLayer];
+    }
+    
+    for (LineMath *lineMath in _lineArray) {
+        CGPoint point1 = [lineMath.InView convertPoint:lineMath.point1 toView:self];
+        CGPoint point2 = [lineMath.InView convertPoint:lineMath.point2 toView:self];
+        [self drawLineWithLayer:point1 endPoint:point2 lineWidth:1.0f lineColor:[UIColor blackColor]];
     }
 }
 

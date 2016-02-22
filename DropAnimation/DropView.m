@@ -117,12 +117,12 @@
 
 - (void)updateAssistantCanvas
 {
-    [_dropSuperView.assistantView.lineArray removeAllObjects];
+    [_dropSuperView.lineArray removeAllObjects];
     
     _center_point = CGPointMake(self.width/2, self.height/2);
     CALayer *smallDrop_layer = _smallDrop.layer.presentationLayer;
     LineMath *lineCenter2Center = [[LineMath alloc] initWithPoint1:_center_point point2:smallDrop_layer.position inView:self];
-    [_dropSuperView.assistantView.lineArray addObject:lineCenter2Center];
+    [_dropSuperView.lineArray addObject:lineCenter2Center];
     
     [_dropSuperView setNeedsDisplay];
 }
