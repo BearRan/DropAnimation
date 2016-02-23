@@ -127,11 +127,78 @@
     LineMath *lineCenter2Center = [[LineMath alloc] initWithPoint1:_center_point point2:smallDrop_layer.position inView:self];
     [_dropSuperView.lineArray addObject:lineCenter2Center];
     
-    //  BigDrop垂直平分线
-    CircleMath *BigCircleMath = [[CircleMath alloc] initWithCenterPoint:_center_point radius:self.width/2 inView:self];
+    //  BigDrop垂直平分线 perpendicularBisector
+    LineMath *perBiseLine_BigDrop = [[LineMath alloc] init];
+    CGFloat angle = atan(lineCenter2Center.k);
+    angle += M_PI/2;
+    perBiseLine_BigDrop.k = tan(angle);
+    perBiseLine_BigDrop.b = _center_point.y - perBiseLine_BigDrop.k * _center_point.x;
+    
+    
+    //  绘制零时的垂直平分线
+//    CGFloat x1_temp = -100;
+//    CGFloat y1_temp = perBiseLine_BigDrop.k * x1_temp + perBiseLine_BigDrop.b;
+//    
+//    CGFloat x2_temp = 100;
+//    CGFloat y2_temp = perBiseLine_BigDrop.k * x2_temp + perBiseLine_BigDrop.b;
+//    
+//    CGPoint point1_temp = CGPointMake(x1_temp, y1_temp);
+//    CGPoint point2_temp = CGPointMake(x2_temp, y2_temp);
+//    
+//    LineMath *perBiseLine_BigDrop_result = [[LineMath alloc] initWithPoint1:point1_temp point2:point2_temp inView:self];
+//    [_dropSuperView.lineArray addObject:perBiseLine_BigDrop_result];
+    
+    
+    
+    
+    
+    //  已知直线方程，圆心，圆半径，求交点
+    //  即 已知直线方程，某一点，距离，求交点
+    //  dx方 = (x2 - x1)方 + (y2 - y1)方
+    //  二次函数 y = ax方 + bx + c
+    //  直线方程 y = kx + b
+    //  圆心  (x0, y0)
+    //  delta = b方 - 4ac
+    
+    CGFloat x0 = _center_point.x;
+    CGFloat y0 = _center_point.y;
+    CGFloat kLine = perBiseLine_BigDrop.k;
+    CGFloat bLine = perBiseLine_BigDrop.b;
+    
+    CGFloat dx = self.width;
+    CGFloat a = (kLine * kLine + 1);
+    CGFloat b = (2 * x0 - 2 * kLine * bLine + 2 * kLine * y0);
+    CGFloat c = x0 * x0 + bLine * bLine - 2 * bLine * y0 + y0 * y0 - dx * dx;
+    
+    CGFloat delta = b * b - 4 * a *c;
+    if (delta > 0) {
+        NSLog(@"两个根");
+        
+        CGFloat x1_result = ((-b) - sqrt(delta)) / 2 * a;
+        CGFloat y1_result = kLine * x1_result + bLine;
+        
+        CGFloat x2_result = ((-b) + sqrt(delta)) / 2 * a;
+        CGFloat y2_result = kLine * x2_result + bLine;
+        
+        _edge_point1 = CGPointMake(x1_result, y1_result);
+        _edge_point2 = CGPointMake(x2_result, y2_result);
+        
+        LineMath *perBiseLine_BigDrop_result = [[LineMath alloc] initWithPoint1:_edge_point1 point2:_edge_point2 inView:self];
+        [_dropSuperView.lineArray addObject:perBiseLine_BigDrop_result];
+    }else if (delta == 0){
+        NSLog(@"一个根");
+    }else{
+        NSLog(@"无解");
+    }
+    
+    
+    
+    
+    
+//    CircleMath *BigCircleMath = [[CircleMath alloc] initWithCenterPoint:_center_point radius:self.width/2 inView:self];
     
     //  SmallDrop垂直平分线
-    CircleMath *SmallCircleMath = [[CircleMath alloc] initWithCenterPoint:smallDrop_layer.position radius:_smallDrop.width/2 inView:self];
+//    CircleMath *SmallCircleMath = [[CircleMath alloc] initWithCenterPoint:smallDrop_layer.position radius:_smallDrop.width/2 inView:self];
     
     
     [_dropSuperView setNeedsDisplay];
