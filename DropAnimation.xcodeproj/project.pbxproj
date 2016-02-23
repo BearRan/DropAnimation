@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09C949561C7B55F600E98556 /* CircleMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C949551C7B55F600E98556 /* CircleMath.m */; };
 		0C48A6B8803993FA3AA1FA53 /* libPods-DropAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 769F7D2AFB3D679DB4F372DC /* libPods-DropAnimation.a */; };
 		1859AA2A1C746E4F00F7791A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1859AA291C746E4F00F7791A /* main.m */; };
 		1859AA2D1C746E4F00F7791A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1859AA2C1C746E4F00F7791A /* AppDelegate.m */; };
@@ -40,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		09C949541C7B55F600E98556 /* CircleMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleMath.h; sourceTree = "<group>"; };
+		09C949551C7B55F600E98556 /* CircleMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleMath.m; sourceTree = "<group>"; };
 		1859AA251C746E4F00F7791A /* DropAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DropAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1859AA291C746E4F00F7791A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1859AA2B1C746E4F00F7791A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -96,6 +99,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		09C949531C7B55B100E98556 /* GeometryMath */ = {
+			isa = PBXGroup;
+			children = (
+				189FF3F41C756A99001D7ED8 /* LineMath.h */,
+				189FF3F51C756A99001D7ED8 /* LineMath.m */,
+				09C949541C7B55F600E98556 /* CircleMath.h */,
+				09C949551C7B55F600E98556 /* CircleMath.m */,
+			);
+			name = GeometryMath;
+			sourceTree = "<group>";
+		};
 		1859AA1C1C746E4F00F7791A = {
 			isa = PBXGroup;
 			children = (
@@ -129,8 +143,7 @@
 				189FF3F81C7593B3001D7ED8 /* DropCanvasView.m */,
 				18DCAB491C7471D6001DBB9D /* DropView.h */,
 				18DCAB4A1C7471D6001DBB9D /* DropView.m */,
-				189FF3F41C756A99001D7ED8 /* LineMath.h */,
-				189FF3F51C756A99001D7ED8 /* LineMath.m */,
+				09C949531C7B55B100E98556 /* GeometryMath */,
 				189FF3EE1C755546001D7ED8 /* PointView.h */,
 				189FF3EF1C755546001D7ED8 /* PointView.m */,
 				18DCAB481C746F9D001DBB9D /* PrefixHeader.pch */,
@@ -371,6 +384,7 @@
 				1859AA301C746E4F00F7791A /* ViewController.m in Sources */,
 				18DCAB4B1C7471D6001DBB9D /* DropView.m in Sources */,
 				1859AA2D1C746E4F00F7791A /* AppDelegate.m in Sources */,
+				09C949561C7B55F600E98556 /* CircleMath.m in Sources */,
 				189FF3F01C755546001D7ED8 /* PointView.m in Sources */,
 				189FF3F61C756A99001D7ED8 /* LineMath.m in Sources */,
 				1859AA2A1C746E4F00F7791A /* main.m in Sources */,

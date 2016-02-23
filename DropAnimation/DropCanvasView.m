@@ -45,7 +45,6 @@
 {
     [super drawRect:rect];
     
-//    [self.assistantView setNeedsDisplay];
     [self drawDropView:_mainDrop];
 }
 

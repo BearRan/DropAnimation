@@ -8,6 +8,7 @@
 
 #import "DropView.h"
 #import "LineMath.h"
+#import "CircleMath.h"
 
 @interface DropView()
 
@@ -121,8 +122,17 @@
     
     _center_point = CGPointMake(self.width/2, self.height/2);
     CALayer *smallDrop_layer = _smallDrop.layer.presentationLayer;
+    
+    //  两点间的连线
     LineMath *lineCenter2Center = [[LineMath alloc] initWithPoint1:_center_point point2:smallDrop_layer.position inView:self];
     [_dropSuperView.lineArray addObject:lineCenter2Center];
+    
+    //  BigDrop垂直平分线
+    CircleMath *BigCircleMath = [[CircleMath alloc] initWithCenterPoint:_center_point radius:self.width/2 inView:self];
+    
+    //  SmallDrop垂直平分线
+    CircleMath *SmallCircleMath = [[CircleMath alloc] initWithCenterPoint:smallDrop_layer.position radius:_smallDrop.width/2 inView:self];
+    
     
     [_dropSuperView setNeedsDisplay];
 }

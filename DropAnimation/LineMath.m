@@ -21,6 +21,17 @@
     _point2 = point2;
     _InView = inView;
     
+    //  斜率不存在
+    if (point2.x == point1.x) {
+        _k = -1;
+        _b = 0;
+    }
+    //  斜率存在
+    else{
+        _k = (point2.y - point1.y) / (point2.x - point1.x);
+        _b = point1.y - _k * point1.x;
+    }
+    
     return self;
 }
 
@@ -34,5 +45,31 @@
     
     return distance;
 }
+
+@synthesize y = _y;
+- (void)setY:(CGFloat)y
+{
+    NSLog(@"setY");
+    _y = y;
+}
+- (CGFloat)y
+{
+    NSLog(@"get y");
+    return _k * _x + _b;
+}
+
+@synthesize x = _x;
+- (void)setX:(CGFloat)x
+{
+    NSLog(@"setX");
+    _x = x;
+}
+- (CGFloat)x
+{
+    NSLog(@"getX");
+    return (_y - _b)/_k;
+}
+
+
 
 @end
