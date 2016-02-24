@@ -107,7 +107,6 @@
 - (void)calucateCoordinate
 {
     //BigDrop
-    _center_point = CGPointMake(self.width/2, self.height/2);
     
     
     //SmallDrop
@@ -131,9 +130,15 @@
     LineMath *perBiseLine_BigDrop = [[LineMath alloc] init];
     CGFloat angle = atan(lineCenter2Center.k);
     angle += M_PI/2;
+    
+    if (angle > M_PI/2) {
+        angle -= M_PI;
+    }else if (angle < - M_PI/2){
+        angle += M_PI;
+    }
+    
     perBiseLine_BigDrop.k = tan(angle);
     perBiseLine_BigDrop.b = _center_point.y - perBiseLine_BigDrop.k * _center_point.x;
-    
     
     //  绘制零时的垂直平分线
 //    CGFloat x1_temp = -100;
@@ -165,20 +170,20 @@
     CGFloat kLine = perBiseLine_BigDrop.k;
     CGFloat bLine = perBiseLine_BigDrop.b;
     
-    CGFloat dx = self.width;
-    CGFloat a = (kLine * kLine + 1);
-    CGFloat b = (2 * x0 - 2 * kLine * bLine + 2 * kLine * y0);
-    CGFloat c = x0 * x0 + bLine * bLine - 2 * bLine * y0 + y0 * y0 - dx * dx;
+    CGFloat dx = self.width/2.0f;
+    CGFloat a = ((kLine * kLine) + 1);
+    CGFloat b = - ((2 * x0) - (2 * kLine * bLine) + (2 * kLine * y0));
+    CGFloat c = (x0 * x0) + (bLine * bLine) - (2 * bLine * y0) + (y0 * y0) - (dx * dx);
     
-    CGFloat delta = b * b - 4 * a *c;
+    float delta = (b * b) - (4 * a * c);
     if (delta > 0) {
         NSLog(@"两个根");
         
-        CGFloat x1_result = ((-b) - sqrt(delta)) / 2 * a;
-        CGFloat y1_result = kLine * x1_result + bLine;
+        CGFloat x1_result = ((-b) - sqrt(delta)) / (2 * a);
+        CGFloat y1_result = (kLine * x1_result) + bLine;
         
-        CGFloat x2_result = ((-b) + sqrt(delta)) / 2 * a;
-        CGFloat y2_result = kLine * x2_result + bLine;
+        CGFloat x2_result = ((-b) + sqrt(delta)) / (2 * a);
+        CGFloat y2_result = (kLine * x2_result) + bLine;
         
         _edge_point1 = CGPointMake(x1_result, y1_result);
         _edge_point2 = CGPointMake(x2_result, y2_result);
