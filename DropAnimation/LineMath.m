@@ -35,6 +35,7 @@
     return self;
 }
 
+//  计算两点间的距离
 + (CGFloat)calucateDistanceBetweenPoint1:(CGPoint)point1 withPoint2:(CGPoint)point2
 {
     CGFloat x_dx    = (point2.x - point1.x);
@@ -44,26 +45,6 @@
     CGFloat distance = sqrt(X_DX2 + Y_DY2);
     
     return distance;
-}
-
-@synthesize y = _y;
-- (void)setY:(CGFloat)y
-{
-    _y = y;
-}
-- (CGFloat)y
-{
-    return _k * _x + _b;
-}
-
-@synthesize x = _x;
-- (void)setX:(CGFloat)x
-{
-    _x = x;
-}
-- (CGFloat)x
-{
-    return (_y - _b)/_k;
 }
 
 

@@ -7,8 +7,6 @@
 //
 
 #import "DropView.h"
-#import "LineMath.h"
-#import "CircleMath.h"
 
 @interface DropView()
 
@@ -17,8 +15,9 @@
 
 @end
 
-@implementation DropView
 
+
+@implementation DropView
 
 - (instancetype)initWithFrame:(CGRect)frame createSmallDrop:(BOOL)createSmallDrop
 {
@@ -39,18 +38,16 @@
     self.layer.masksToBounds = NO;
     self.clipsToBounds = NO;
     
-    
-    
     return self;
 }
 
 - (void)createDropView
 {
+    _circleMath = [[CircleMath alloc] initWithCenterPoint:CGPointMake(self.width/2, self.height/2) radius:self.width/2 inView:self];
+    
     _dropShapLayer = [CAShapeLayer layer];
     [self.layer addSublayer:_dropShapLayer];
-    
     _bezierPath = [UIBezierPath bezierPath];
-//    [_bezierPath addArcWithCenter:CGPointMake(self.centerX, self.centerY) radius:self.width/2 startAngle:0 endAngle:2 * M_PI clockwise:YES];
     _dropShapLayer.path = _bezierPath.CGPath;
     
     _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(calucateCoordinate)];
@@ -66,7 +63,7 @@
 
 - (void)createSmallDropView
 {
-    CGFloat smallDrop_width = 50;
+    CGFloat smallDrop_width = 150;
     _smallDrop = [[DropView alloc] initWithFrame:CGRectMake(0, 0, smallDrop_width, smallDrop_width) createSmallDrop:NO];
     _smallDrop.fillColor = [UIColor redColor];
     [self addSubview:_smallDrop];
@@ -106,72 +103,72 @@
 
 - (void)calucateCoordinate
 {
-    //BigDrop
-    
-    
-    //SmallDrop
-    
-    
-    [self updateAssistantCanvas];
-}
-
-- (void)updateAssistantCanvas
-{
     [_dropSuperView.lineArray removeAllObjects];
     
-    _center_point = CGPointMake(self.width/2, self.height/2);
-    CALayer *smallDrop_layer = _smallDrop.layer.presentationLayer;
-    
     //  两点间的连线
-    LineMath *lineCenter2Center = [[LineMath alloc] initWithPoint1:_center_point point2:smallDrop_layer.position inView:self];
-    [_dropSuperView.lineArray addObject:lineCenter2Center];
+    CALayer *smallDrop_layer = _smallDrop.layer.presentationLayer;
+    _lineCenter2Center = [[LineMath alloc] initWithPoint1:_circleMath.centerPoint point2:smallDrop_layer.position inView:self];
+    [_dropSuperView.lineArray addObject:_lineCenter2Center];
     
-    //  BigDrop垂直平分线 perpendicularBisector
-    LineMath *perBiseLine_BigDrop = [[LineMath alloc] init];
-    CGFloat angle = atan(lineCenter2Center.k);
+    
+    //  bigDrop与lineCenter2Center的垂直平分线的交点
+    [self calucateCircleAndPerBiseLinePoint_withCircle:self.circleMath withDropView:self];
+    
+    //  smallDrop与lineCenter2Center的垂直平分线的交点
+    [self calucateCircleAndPerBiseLinePoint_withCircle:self.smallDrop.circleMath withDropView:self];
+    
+    
+    [_dropSuperView setNeedsDisplay];
+}
+
+
+/** 已知过圆心的直线方程，求圆与直线的两个交点
+ *
+ *  1，圆的方程
+ *  dx方 = (x2 - x1)方 + (y2 - y1)方
+ *  2，直线方程
+ *  y = kx + b
+ *
+ *  联立1，2方程式，得出二次函数
+ *  ax方 + bx + c = 0
+ *  其中：
+ *  a = ((kLine * kLine) + 1)
+ *  b = - ((2 * x0) - (2 * kLine * bLine) + (2 * kLine * y0))
+ *  c = (x0 * x0) + (bLine * bLine) - (2 * bLine * y0) + (y0 * y0) - (dx * dx)
+ *  delta = b方 - 4ac
+ *  解出该二次函数的两个根，就能得出圆与直线的两个交点的x值，从而得出圆与直线的两个交点的坐标
+ *
+ *  参数说明
+ *  (x0, y0)    圆心坐标
+ *  kLine       直线的斜率
+ *  bLine       直线的b参数
+ *  dx          圆的半径
+ *  a,b,c,delta 上面都已说明，不再解释
+ */
+- (void)calucateCircleAndPerBiseLinePoint_withCircle:(CircleMath *)circle withDropView:(DropView *)dropView
+{
+    CGPoint tempCenter = [self convertPoint:circle.centerPoint fromView:circle.InView];
+    CGFloat x0 = tempCenter.x;
+    CGFloat y0 = tempCenter.y;
+    
+    
+    //  Center2Centerde的垂直平分线 perpendicularBisector
+    LineMath *perBiseLine = [[LineMath alloc] init];
+    CGFloat angle = atan(_lineCenter2Center.k);
     angle += M_PI/2;
-    
     if (angle > M_PI/2) {
         angle -= M_PI;
     }else if (angle < - M_PI/2){
         angle += M_PI;
     }
-    
-    perBiseLine_BigDrop.k = tan(angle);
-    perBiseLine_BigDrop.b = _center_point.y - perBiseLine_BigDrop.k * _center_point.x;
-    
+    perBiseLine.k = tan(angle);
+    perBiseLine.b = y0 - perBiseLine.k * x0;
     
     
+    CGFloat kLine = perBiseLine.k;
+    CGFloat bLine = perBiseLine.b;
     
-    /** 已知过圆心的直线方程，求圆与直线的两个交点
-     *
-     *  1，圆的方程
-     *  dx方 = (x2 - x1)方 + (y2 - y1)方
-     *  2，直线方程
-     *  y = kx + b
-     *
-     *  联立1，2方程式，得出二次函数
-     *  ax方 + bx + c = 0
-     *  其中：
-     *  a = ((kLine * kLine) + 1)
-     *  b = - ((2 * x0) - (2 * kLine * bLine) + (2 * kLine * y0))
-     *  c = (x0 * x0) + (bLine * bLine) - (2 * bLine * y0) + (y0 * y0) - (dx * dx)
-     *  delta = b方 - 4ac
-     *  解出该二次函数的两个根，就能得出圆与直线的两个交点的x值，从而得出圆与直线的两个交点的坐标
-     *
-     *  参数说明
-     *  (x0, y0)    圆心坐标
-     *  kLine       直线的斜率
-     *  bLine       直线的b参数
-     *  dx          圆的半径
-     *  a,b,c,delta 上面都已说明，不再解释
-     */
-    CGFloat x0 = _center_point.x;
-    CGFloat y0 = _center_point.y;
-    CGFloat kLine = perBiseLine_BigDrop.k;
-    CGFloat bLine = perBiseLine_BigDrop.b;
-    
-    CGFloat dx = self.width/2.0f;
+    CGFloat dx = circle.radius;
     CGFloat a = ((kLine * kLine) + 1);
     CGFloat b = - ((2 * x0) - (2 * kLine * bLine) + (2 * kLine * y0));
     CGFloat c = (x0 * x0) + (bLine * bLine) - (2 * bLine * y0) + (y0 * y0) - (dx * dx);
@@ -186,30 +183,17 @@
         CGFloat x2_result = ((-b) + sqrt(delta)) / (2 * a);
         CGFloat y2_result = (kLine * x2_result) + bLine;
         
-        _edge_point1 = CGPointMake(x1_result, y1_result);
-        _edge_point2 = CGPointMake(x2_result, y2_result);
+        dropView.edge_point1 = CGPointMake(x1_result, y1_result);
+        dropView.edge_point2 = CGPointMake(x2_result, y2_result);
         
-        LineMath *perBiseLine_BigDrop_result = [[LineMath alloc] initWithPoint1:_edge_point1 point2:_edge_point2 inView:self];
+        LineMath *perBiseLine_BigDrop_result = [[LineMath alloc] initWithPoint1:dropView.edge_point1 point2:dropView.edge_point2 inView:self];
         [_dropSuperView.lineArray addObject:perBiseLine_BigDrop_result];
     }else if (delta == 0){
         NSLog(@"一个根");
     }else{
         NSLog(@"无解");
     }
-    
-    
-    
-    
-    
-//    CircleMath *BigCircleMath = [[CircleMath alloc] initWithCenterPoint:_center_point radius:self.width/2 inView:self];
-    
-    //  SmallDrop垂直平分线
-//    CircleMath *SmallCircleMath = [[CircleMath alloc] initWithCenterPoint:smallDrop_layer.position radius:_smallDrop.width/2 inView:self];
-    
-    
-    [_dropSuperView setNeedsDisplay];
 }
-
 
 @synthesize fillColor = _fillColor;
 - (void)setFillColor:(UIColor *)fillColor
