@@ -49,24 +49,20 @@
 @synthesize y = _y;
 - (void)setY:(CGFloat)y
 {
-//    NSLog(@"setY");
     _y = y;
 }
 - (CGFloat)y
 {
-//    NSLog(@"get y");
     return _k * _x + _b;
 }
 
 @synthesize x = _x;
 - (void)setX:(CGFloat)x
 {
-//    NSLog(@"setX");
     _x = x;
 }
 - (CGFloat)x
 {
-//    NSLog(@"getX");
     return (_y - _b)/_k;
 }
 

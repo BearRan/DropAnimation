@@ -140,31 +140,32 @@
     perBiseLine_BigDrop.k = tan(angle);
     perBiseLine_BigDrop.b = _center_point.y - perBiseLine_BigDrop.k * _center_point.x;
     
-    //  绘制零时的垂直平分线
-//    CGFloat x1_temp = -100;
-//    CGFloat y1_temp = perBiseLine_BigDrop.k * x1_temp + perBiseLine_BigDrop.b;
-//    
-//    CGFloat x2_temp = 100;
-//    CGFloat y2_temp = perBiseLine_BigDrop.k * x2_temp + perBiseLine_BigDrop.b;
-//    
-//    CGPoint point1_temp = CGPointMake(x1_temp, y1_temp);
-//    CGPoint point2_temp = CGPointMake(x2_temp, y2_temp);
-//    
-//    LineMath *perBiseLine_BigDrop_result = [[LineMath alloc] initWithPoint1:point1_temp point2:point2_temp inView:self];
-//    [_dropSuperView.lineArray addObject:perBiseLine_BigDrop_result];
     
     
     
-    
-    
-    //  已知直线方程，圆心，圆半径，求交点
-    //  即 已知直线方程，某一点，距离，求交点
-    //  dx方 = (x2 - x1)方 + (y2 - y1)方
-    //  二次函数 y = ax方 + bx + c
-    //  直线方程 y = kx + b
-    //  圆心  (x0, y0)
-    //  delta = b方 - 4ac
-    
+    /** 已知过圆心的直线方程，求圆与直线的两个交点
+     *
+     *  1，圆的方程
+     *  dx方 = (x2 - x1)方 + (y2 - y1)方
+     *  2，直线方程
+     *  y = kx + b
+     *
+     *  联立1，2方程式，得出二次函数
+     *  ax方 + bx + c = 0
+     *  其中：
+     *  a = ((kLine * kLine) + 1)
+     *  b = - ((2 * x0) - (2 * kLine * bLine) + (2 * kLine * y0))
+     *  c = (x0 * x0) + (bLine * bLine) - (2 * bLine * y0) + (y0 * y0) - (dx * dx)
+     *  delta = b方 - 4ac
+     *  解出该二次函数的两个根，就能得出圆与直线的两个交点的x值，从而得出圆与直线的两个交点的坐标
+     *
+     *  参数说明
+     *  (x0, y0)    圆心坐标
+     *  kLine       直线的斜率
+     *  bLine       直线的b参数
+     *  dx          圆的半径
+     *  a,b,c,delta 上面都已说明，不再解释
+     */
     CGFloat x0 = _center_point.x;
     CGFloat y0 = _center_point.y;
     CGFloat kLine = perBiseLine_BigDrop.k;
