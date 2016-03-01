@@ -120,7 +120,21 @@
         }
         
         [dropView.bezierPath removeAllPoints];
+        
+        //  MainDrop 半圆
         [dropView.bezierPath addArcWithCenter:mainDrop_center radius:dropView.circleMath.radius startAngle:tempAngle endAngle:tempAngle + M_PI clockwise:YES];
+        
+        //  MainDrop->SmallDrop贝赛尔曲线
+        CGPoint mainEdgePoint1 = [dropView convertPoint:dropView.edge_point1 toView:self];
+        CGPoint smallEdgePoint2 = [dropView convertPoint:dropView.smallDrop.edge_point2 toView:self];
+        CGPoint controlPoint = CGPointMake((mainDrop_center.x + smallDrop_center.x)/2, (mainDrop_center.y + smallDrop_center.y)/2);
+        [dropView.bezierPath addQuadCurveToPoint:smallEdgePoint2 controlPoint:controlPoint];
+        
+        //  SmallDrop 半圆
+        [dropView.bezierPath addArcWithCenter:smallDrop_center radius:dropView.smallDrop.circleMath.radius startAngle:tempAngle + M_PI endAngle:tempAngle clockwise:YES];
+        
+        //  SmallDrop->MainDrop贝赛尔曲线
+        [dropView.bezierPath addQuadCurveToPoint:mainEdgePoint1 controlPoint:controlPoint];
 
     }else{
         NSLog(@"在里面");

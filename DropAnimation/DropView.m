@@ -67,7 +67,7 @@
 
 - (void)createSmallDropView
 {
-    CGFloat smallDrop_width = 150;
+    CGFloat smallDrop_width = 80;
     _smallDrop = [[DropView alloc] initWithFrame:CGRectMake(0, 0, smallDrop_width, smallDrop_width) createSmallDrop:NO];
     _smallDrop.dropShapLayer.fillColor = [[UIColor redColor] colorWithAlphaComponent:0.5].CGColor;
     [self addSubview:_smallDrop];
@@ -119,7 +119,7 @@
     [self calucateCircleAndPerBiseLinePoint_withCircle:self.circleMath withDropView:self];
     
     //  smallDrop与lineCenter2Center的垂直平分线的交点
-    [self calucateCircleAndPerBiseLinePoint_withCircle:self.smallDrop.circleMath withDropView:self];
+    [self calucateCircleAndPerBiseLinePoint_withCircle:self.smallDrop.circleMath withDropView:self.smallDrop];
     
     
     [_dropSuperView setNeedsDisplay];
