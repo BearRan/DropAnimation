@@ -99,13 +99,26 @@
     if (centerDistance > (dropView.width - dropView.smallDrop.width)/2) {
         NSLog(@"超出");
         
-        CGFloat tempAngle = atan(dropView.lineCenter2Center.k) - M_PI/2;
-        CGFloat sina = sin(tempAngle);
-        CGFloat cosa = cos(tempAngle);
-        CGFloat degrees = radiansToDegrees(tempAngle);
-        NSLog(@"sina:%f consa:%f", sina, cosa);
-        NSLog(@"tempAngle:%f", tempAngle);
-        NSLog(@"degrees:%f", degrees);
+        CGFloat tempAngle = atan(dropView.lineCenter2Center.k);
+        
+        //  垂直平分线的斜率k矫正
+        //  第一象限
+        if (mainDrop_center.x < smallDrop_center.x && mainDrop_center.y > smallDrop_center.y) {
+            tempAngle += M_PI/2;
+        }
+        //  第二象限
+        else if (mainDrop_center.x > smallDrop_center.x && mainDrop_center.y > smallDrop_center.y){
+            tempAngle -= M_PI/2;
+        }
+        //  第三象限
+        else if (mainDrop_center.x > smallDrop_center.x && mainDrop_center.y < smallDrop_center.y){
+            tempAngle -= M_PI/2;
+        }
+        //  第四象限
+        else if (mainDrop_center.x < smallDrop_center.x && mainDrop_center.y < smallDrop_center.y){
+            tempAngle += M_PI/2;
+        }
+        
         [dropView.bezierPath removeAllPoints];
         [dropView.bezierPath addArcWithCenter:mainDrop_center radius:dropView.circleMath.radius startAngle:tempAngle endAngle:tempAngle + M_PI clockwise:YES];
 
