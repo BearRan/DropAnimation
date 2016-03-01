@@ -190,8 +190,31 @@
         dropView.edge_point1 = CGPointMake(x1_result, y1_result);
         dropView.edge_point2 = CGPointMake(x2_result, y2_result);
         
+        CGPoint mainDrop_center = CGPointMake(self.width/2, self.height/2);
+        CGPoint smallDrop_center = self.smallDrop.center;
+        //  edgePoint矫正
+        //  第一象限
+        if (mainDrop_center.x < smallDrop_center.x && mainDrop_center.y > smallDrop_center.y) {
+                dropView.edge_point1 = CGPointMake(x2_result, y2_result);
+                dropView.edge_point2 = CGPointMake(x1_result, y1_result);
+        }
+        //  第二象限
+        else if (mainDrop_center.x > smallDrop_center.x && mainDrop_center.y > smallDrop_center.y){
+                dropView.edge_point1 = CGPointMake(x2_result, y2_result);
+                dropView.edge_point2 = CGPointMake(x1_result, y1_result);
+        }
+        //  第三象限
+        else if (mainDrop_center.x > smallDrop_center.x && mainDrop_center.y < smallDrop_center.y){
+            
+        }
+        //  第四象限
+        else if (mainDrop_center.x < smallDrop_center.x && mainDrop_center.y < smallDrop_center.y){
+            
+        }
+        
         LineMath *perBiseLine_BigDrop_result = [[LineMath alloc] initWithPoint1:dropView.edge_point1 point2:dropView.edge_point2 inView:self];
         [_dropSuperView.lineArray addObject:perBiseLine_BigDrop_result];
+        
     }else if (delta == 0){
 //        NSLog(@"一个根");
     }else{
