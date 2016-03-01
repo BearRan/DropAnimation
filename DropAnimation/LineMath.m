@@ -35,6 +35,30 @@
     return self;
 }
 
+/***********************
+ 角度说明
+ 
+             90度
+             |
+             |
+             |
+             |
+ 0度  ----------------  180度
+             |
+ －30或者330  |
+             |
+             |
+             270 度
+ 
+ **************************/
+- (void)calucateDegrees
+{
+    CGFloat tempAngle = atan(_k);
+    CGFloat degrees = radiansToDegrees(tempAngle);
+    NSLog(@"tempAngle:%f", tempAngle);
+    NSLog(@"degrees:%f", degrees);
+}
+
 //  计算两点间的距离
 + (CGFloat)calucateDistanceBetweenPoint1:(CGPoint)point1 withPoint2:(CGPoint)point2
 {

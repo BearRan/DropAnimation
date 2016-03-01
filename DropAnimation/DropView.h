@@ -14,7 +14,6 @@
 
 @interface DropView : UIView
 
-@property (strong, nonatomic) UIColor       *fillColor;
 @property (strong, nonatomic) LineMath      *lineCenter2Center; //圆心的连线
 @property (strong, nonatomic) CircleMath    *circleMath;        //圆的方程
 @property (assign, nonatomic) CGPoint       edge_point1;        //圆心连线的垂线与圆的交点1

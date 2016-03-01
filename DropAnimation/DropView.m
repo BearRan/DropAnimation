@@ -45,10 +45,14 @@
 {
     _circleMath = [[CircleMath alloc] initWithCenterPoint:CGPointMake(self.width/2, self.height/2) radius:self.width/2 inView:self];
     
-    _dropShapLayer = [CAShapeLayer layer];
-    [self.layer addSublayer:_dropShapLayer];
     _bezierPath = [UIBezierPath bezierPath];
-    _dropShapLayer.path = _bezierPath.CGPath;
+    
+    _dropShapLayer = [CAShapeLayer layer];
+    _dropShapLayer.fillColor = [[UIColor blueColor] colorWithAlphaComponent:0.4].CGColor;
+    _dropShapLayer.lineWidth = 5.0f;
+    _dropShapLayer.strokeColor = [UIColor blackColor].CGColor;
+    _dropShapLayer.strokeStart = 0;
+    _dropShapLayer.strokeEnd = 1;
     
     _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(calucateCoordinate)];
     [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
@@ -65,7 +69,7 @@
 {
     CGFloat smallDrop_width = 150;
     _smallDrop = [[DropView alloc] initWithFrame:CGRectMake(0, 0, smallDrop_width, smallDrop_width) createSmallDrop:NO];
-    _smallDrop.fillColor = [UIColor redColor];
+    _smallDrop.dropShapLayer.fillColor = [[UIColor redColor] colorWithAlphaComponent:0.5].CGColor;
     [self addSubview:_smallDrop];
     [_smallDrop BearSetCenterToParentViewWithAxis:kAXIS_X_Y];
 }
@@ -175,7 +179,7 @@
     
     float delta = (b * b) - (4 * a * c);
     if (delta > 0) {
-        NSLog(@"两个根");
+//        NSLog(@"两个根");
         
         CGFloat x1_result = ((-b) - sqrt(delta)) / (2 * a);
         CGFloat y1_result = (kLine * x1_result) + bLine;
@@ -189,18 +193,10 @@
         LineMath *perBiseLine_BigDrop_result = [[LineMath alloc] initWithPoint1:dropView.edge_point1 point2:dropView.edge_point2 inView:self];
         [_dropSuperView.lineArray addObject:perBiseLine_BigDrop_result];
     }else if (delta == 0){
-        NSLog(@"一个根");
+//        NSLog(@"一个根");
     }else{
-        NSLog(@"无解");
+//        NSLog(@"无解");
     }
-}
-
-@synthesize fillColor = _fillColor;
-- (void)setFillColor:(UIColor *)fillColor
-{
-    _fillColor = fillColor;
-    _dropShapLayer.fillColor = fillColor.CGColor;
-//    self.alpha = 0.5;
 }
 
 @end
