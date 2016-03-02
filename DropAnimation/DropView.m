@@ -152,6 +152,7 @@
 - (void)calucateCircleAndPerBiseLinePoint_withCircle:(CircleMath *)circle withDropView:(DropView *)dropView
 {
     CGPoint tempCenter = [self convertPoint:circle.centerPoint fromView:circle.InView];
+    CALayer *smallDrop_layer = _smallDrop.layer.presentationLayer;
     CGFloat x0 = tempCenter.x;
     CGFloat y0 = tempCenter.y;
     
@@ -191,7 +192,7 @@
         dropView.edge_point2 = CGPointMake(x2_result, y2_result);
         
         CGPoint mainDrop_center = CGPointMake(self.width/2, self.height/2);
-        CGPoint smallDrop_center = self.smallDrop.center;
+        CGPoint smallDrop_center = smallDrop_layer.position;
         //  edgePoint矫正
         //  第一象限
         if (mainDrop_center.x < smallDrop_center.x && mainDrop_center.y > smallDrop_center.y) {
