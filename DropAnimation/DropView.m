@@ -356,6 +356,13 @@
     AcrossPointStruct acrossPointStruct = [self calucateCircleAndLineAcrossPoint_withCircle:_circleMath withLine:verLine];
     verLine.point1 = acrossPointStruct.point1;
     verLine.point2 = acrossPointStruct.point2;
+    
+    _edge_point1 = verLine.point1;
+    _edge_point2 = verLine.point2;
+    
+    _smallDrop.edge_point1 = verLine.point1;
+    _smallDrop.edge_point2 = verLine.point2;
+    
     [_dropSuperView.lineArray addObject:verLine];
 }
 
