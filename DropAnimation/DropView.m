@@ -158,6 +158,32 @@
     [_dropSuperView setNeedsDisplay];
 }
 
+
+//  计算Center2Center过圆心的垂直平分线和DropView的交点
+- (void)calucateCircleAndPerBiseLinePoint_withCircle:(CircleMath *)circle withDropView:(DropView *)dropView
+{
+    CGPoint tempCenter = [self convertPoint:circle.centerPoint fromView:circle.InView];
+    CGFloat x0 = tempCenter.x;
+    CGFloat y0 = tempCenter.y;
+    
+    //  Center2Center的的垂直平分线 perpendicularBisector
+    LineMath *perBiseLine = [[LineMath alloc] init];
+    CGFloat angle = atan(_lineCenter2Center.k);
+    angle += M_PI/2;
+    if (angle > M_PI/2) {
+        angle -= M_PI;
+    }else if (angle < - M_PI/2){
+        angle += M_PI;
+    }
+    perBiseLine.k = tan(angle);
+    perBiseLine.b = y0 - perBiseLine.k * x0;
+    
+    AcrossPointStruct acrossPointStruct = [self calucateCircleAndLineAcrossPoint_withCircle:circle withLine:perBiseLine];
+    dropView.edge_point1 = acrossPointStruct.point1;
+    dropView.edge_point2 = acrossPointStruct.point2;
+}
+
+
 /** 已知过圆心的直线方程，求圆与直线的两个交点
  *
  *  1，圆的方程
@@ -186,8 +212,7 @@
     CGPoint tempCenter = [self convertPoint:circle.centerPoint fromView:circle.InView];
     CGFloat x0 = tempCenter.x;
     CGFloat y0 = tempCenter.y;
-    
-    
+
     CGFloat kLine = line.k;
     CGFloat bLine = line.b;
     
@@ -195,7 +220,6 @@
     CGFloat a = ((kLine * kLine) + 1);
     CGFloat b = - ((2 * x0) - (2 * kLine * bLine) + (2 * kLine * y0));
     CGFloat c = (x0 * x0) + (bLine * bLine) - (2 * bLine * y0) + (y0 * y0) - (dx * dx);
-    
     AcrossPointStruct acrossPointStruct;
     
     float delta = (b * b) - (4 * a * c);
@@ -243,35 +267,12 @@
         [_dropSuperView.lineArray addObject:perBiseLine_BigDrop_result];
         
     }else if (delta == 0){
-        //        NSLog(@"一个根");
+        NSLog(@"圆与直线 一个交点");
     }else{
-        //        NSLog(@"无解");
+        NSLog(@"圆与直线 无交点");
     }
     
     return acrossPointStruct;
-}
-
-- (void)calucateCircleAndPerBiseLinePoint_withCircle:(CircleMath *)circle withDropView:(DropView *)dropView
-{
-    CGPoint tempCenter = [self convertPoint:circle.centerPoint fromView:circle.InView];
-    CGFloat x0 = tempCenter.x;
-    CGFloat y0 = tempCenter.y;
-    
-    //  Center2Centerde的垂直平分线 perpendicularBisector
-    LineMath *perBiseLine = [[LineMath alloc] init];
-    CGFloat angle = atan(_lineCenter2Center.k);
-    angle += M_PI/2;
-    if (angle > M_PI/2) {
-        angle -= M_PI;
-    }else if (angle < - M_PI/2){
-        angle += M_PI;
-    }
-    perBiseLine.k = tan(angle);
-    perBiseLine.b = y0 - perBiseLine.k * x0;
-    
-    AcrossPointStruct acrossPointStruct = [self calucateCircleAndLineAcrossPoint_withCircle:circle withLine:perBiseLine];
-    dropView.edge_point1 = acrossPointStruct.point1;
-    dropView.edge_point2 = acrossPointStruct.point2;
 }
 
 
@@ -352,6 +353,10 @@
     verLine.k = tan(angle);
     verLine.b = y_o - verLine.k * x_o;
     
+    AcrossPointStruct acrossPointStruct = [self calucateCircleAndLineAcrossPoint_withCircle:_circleMath withLine:verLine];
+    verLine.point1 = acrossPointStruct.point1;
+    verLine.point2 = acrossPointStruct.point2;
+    [_dropSuperView.lineArray addObject:verLine];
 }
 
 @end
