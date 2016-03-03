@@ -52,22 +52,6 @@
 {
     [super drawRect:rect];
     
-//    DropView *dropView = _mainDrop;
-//    CGPoint mainDrop_center = dropView.center;
-//    CGFloat tempAngle = atan(dropView.lineCenter2Center.k);
-//    CGFloat sina = sin(tempAngle);
-//    CGFloat cosa = cos(tempAngle);
-//    CGFloat degrees = radiansToDegrees(tempAngle);
-//    NSLog(@"sina:%f consa:%f", sina, cosa);
-//    NSLog(@"tempAngle:%f", tempAngle);
-//    NSLog(@"degrees:%f", degrees);
-//    
-//    [dropView.bezierPath addArcWithCenter:mainDrop_center radius:dropView.circleMath.radius startAngle:degrees endAngle:degrees + 90 clockwise:YES];
-    //        dropView.dropShapLayer.path = dropView.bezierPath.CGPath;
-    //        dropView.dropShapLayer.borderColor = [UIColor redColor].CGColor;
-    //        dropView.dropShapLayer.borderWidth = 2.0f;
-    //        dropView.fillColor = [UIColor redColor];
-    
     [self drawDropView:_mainDrop];
 }
 
@@ -100,8 +84,12 @@
  */
 - (void)drawDropView:(DropView *)dropView
 {
-    CGPoint mainDrop_center = dropView.center;
     CALayer *smallDrop_presentLayer = dropView.smallDrop.layer.presentationLayer;
+    if (smallDrop_presentLayer == nil) {
+        return;
+    }
+    
+    CGPoint mainDrop_center = dropView.center;
     CGPoint smallDrop_center = [dropView convertPoint:smallDrop_presentLayer.position toView:self];
     CGFloat centerDistance = [LineMath calucateDistanceBetweenPoint1:mainDrop_center withPoint2:smallDrop_center];
     
@@ -114,7 +102,6 @@
     /******     MainDrop和SmallDrop 相离   ******/
     
     if (centerDistance > (dropView.circleMath.radius + dropView.smallDrop.circleMath.radius)) {
-        
         CGFloat tempAngle = atan(dropView.lineCenter2Center.k);
         
         //  垂直平分线的斜率k矫正
@@ -155,6 +142,7 @@
     /******    MainDrop和SmallDrop 相交   ******/
     
     else if(centerDistance < (dropView.circleMath.radius + dropView.smallDrop.circleMath.radius) && centerDistance > (dropView.circleMath.radius - dropView.smallDrop.circleMath.radius)){
+        
         [dropView.bezierPath removeAllPoints];
         
         //  MainDrop半圆
@@ -222,7 +210,8 @@
     /******     MainDrop和SmallDrop 包含    ******/
     
     else{
-    
+        
+        [dropView.bezierPath removeAllPoints];
     }
     
     dropView.dropShapLayer.path = dropView.bezierPath.CGPath;
