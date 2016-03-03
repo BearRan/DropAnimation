@@ -10,6 +10,12 @@
 #import "DropView.h"
 #import "LineMath.h"
 
+//  角度转弧度
+#define degreesToRadian(x) (M_PI * x / 180.0)
+
+//  弧度转角度
+#define radiansToDegrees(x) (180.0 * x / M_PI)
+
 @interface DropCanvasView()
 @property (strong, nonatomic) DropView          *mainDrop;
 
@@ -65,11 +71,7 @@
     [self drawDropView:_mainDrop];
 }
 
-//  角度转弧度
-#define degreesToRadian(x) (M_PI * x / 180.0)
 
-//  弧度转角度
-#define radiansToDegrees(x) (180.0 * x / M_PI)
 
 
 /***********************
@@ -89,21 +91,29 @@
  
  **************************/
 
+/** 绘制DropView
+ *
+ *  mainDrop_center         mainDrop中心点
+ *  smallDrop_presentLayer  smallDrop演示图层
+ *  smallDrop_center        smallDrop中心点
+ *  centerDistance          mainDrop和smallDrop中心的距离
+ */
 - (void)drawDropView:(DropView *)dropView
 {
     CGPoint mainDrop_center = dropView.center;
-    CALayer *smallDrop_layer = dropView.smallDrop.layer.presentationLayer;
-    CGPoint smallDrop_center = [dropView convertPoint:smallDrop_layer.position toView:self];
+    CALayer *smallDrop_presentLayer = dropView.smallDrop.layer.presentationLayer;
+    CGPoint smallDrop_center = [dropView convertPoint:smallDrop_presentLayer.position toView:self];
+    CGFloat centerDistance = [LineMath calucateDistanceBetweenPoint1:mainDrop_center withPoint2:smallDrop_center];
     
     CGPoint mainEdgePoint1 = [dropView convertPoint:dropView.edge_point1 toView:self];
     CGPoint mainEdgePoint2 = [dropView convertPoint:dropView.edge_point2 toView:self];
     CGPoint smallEdgePoint1 = [dropView convertPoint:dropView.smallDrop.edge_point1 toView:self];
     CGPoint smallEdgePoint2 = [dropView convertPoint:dropView.smallDrop.edge_point2 toView:self];
     
-    //  绘制主DropView
-    CGFloat centerDistance = [LineMath calucateDistanceBetweenPoint1:mainDrop_center withPoint2:smallDrop_center];
+    
+    /******     MainDrop和SmallDrop 相离   ******/
+    
     if (centerDistance > (dropView.circleMath.radius + dropView.smallDrop.circleMath.radius)) {
-//        NSLog(@"超出");
         
         CGFloat tempAngle = atan(dropView.lineCenter2Center.k);
         
@@ -140,9 +150,11 @@
         
         //  SmallDrop->MainDrop贝赛尔曲线
         [dropView.bezierPath addQuadCurveToPoint:mainEdgePoint1 controlPoint:controlPoint];
-
-    }else{
-//        NSLog(@"在里面");
+    }
+    
+    /******    MainDrop和SmallDrop 相交   ******/
+    
+    else if(centerDistance < (dropView.circleMath.radius + dropView.smallDrop.circleMath.radius) && centerDistance > (dropView.circleMath.radius - dropView.smallDrop.circleMath.radius)){
         [dropView.bezierPath removeAllPoints];
         
         //  MainDrop半圆
@@ -207,8 +219,15 @@
         [dropView.bezierPath addArcWithCenter:smallDrop_center radius:dropView.smallDrop.circleMath.radius startAngle:angleLine_SmallP2 endAngle:angleLine_SmallP1 clockwise:YES];
     }
     
+    /******     MainDrop和SmallDrop 包含    ******/
+    
+    else{
+    
+    }
+    
     dropView.dropShapLayer.path = dropView.bezierPath.CGPath;
     
+    //  绘制辅助线
     for (LineMath *lineMath in _lineArray) {
         CGPoint point1 = [lineMath.InView convertPoint:lineMath.point1 toView:self];
         CGPoint point2 = [lineMath.InView convertPoint:lineMath.point2 toView:self];

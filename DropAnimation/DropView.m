@@ -331,16 +331,10 @@
             break;
     }
     
-    
-    NSLog(@"self.width/2:%f", self.width/2);
-    NSLog(@"x_o:%f", x_o);
     y_o = _lineCenter2Center.k * x_o + _lineCenter2Center.b;
 
     LineMath *tempLine = [[LineMath alloc] initWithPoint1:CGPointMake(self.width/2, self.height/2) point2:CGPointMake(x_o, y_o) inView:self];
     [_dropSuperView.lineArray addObject:tempLine];
-    
-    CGFloat xxx = (x_o*x_o) + (y_o*y_o) - (x2*x2);
-    NSLog(@"xxx:%f", xxx);
     
     //  Center2Centerde的垂线 VerticalLine
     LineMath *verLine = [[LineMath alloc] init];
