@@ -12,6 +12,13 @@
 #import "CircleMath.h"
 #import "LineMath.h"
 
+typedef enum {
+    kQuadrant_First,
+    kQuadrant_Second,
+    kQuadrant_Third,
+    kQuadrant_Fourth,
+}kQuadrantArea;
+
 @interface DropView : UIView
 
 @property (strong, nonatomic) LineMath      *lineCenter2Center; //圆心的连线
@@ -21,6 +28,7 @@
 
 @property (strong, nonatomic) DropView          *smallDrop;
 @property (assign, nonatomic) DropCanvasView    *dropSuperView;
+@property (assign, nonatomic) kQuadrantArea     smallDropQuadrant;
 
 @property (strong, nonatomic) CAShapeLayer  *dropShapLayer;
 @property (strong, nonatomic) UIBezierPath  *bezierPath;

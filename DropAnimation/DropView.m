@@ -26,7 +26,9 @@
         self = nil;
     }
     
-    self.backgroundColor = [UIColor clearColor];
+//    self.backgroundColor = [UIColor clearColor];
+    self.layer.cornerRadius = self.width/2;
+    self.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:0.5];
     [self createDropView];
     [self createCenterPointView];
     
@@ -69,7 +71,8 @@
 {
     CGFloat smallDrop_width = 80;
     _smallDrop = [[DropView alloc] initWithFrame:CGRectMake(0, 0, smallDrop_width, smallDrop_width) createSmallDrop:NO];
-    _smallDrop.dropShapLayer.fillColor = [[UIColor redColor] colorWithAlphaComponent:0.5].CGColor;
+    _smallDrop.layer.cornerRadius = smallDrop_width/2;
+    _smallDrop.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.5];
     [self addSubview:_smallDrop];
     [_smallDrop BearSetCenterToParentViewWithAxis:kAXIS_X_Y];
 }
@@ -112,15 +115,45 @@
     //  两点间的连线
     CALayer *smallDrop_layer = _smallDrop.layer.presentationLayer;
     _lineCenter2Center = [[LineMath alloc] initWithPoint1:_circleMath.centerPoint point2:smallDrop_layer.position inView:self];
-    [_dropSuperView.lineArray addObject:_lineCenter2Center];
+//    [_dropSuperView.lineArray addObject:_lineCenter2Center];
     
     
-    //  bigDrop与lineCenter2Center的垂直平分线的交点
-    [self calucateCircleAndPerBiseLinePoint_withCircle:self.circleMath withDropView:self];
+    CGPoint mainDrop_center = CGPointMake(self.width/2, self.height/2);
+    CGPoint smallDrop_center = smallDrop_layer.position;
+    //  第一象限
+    if (mainDrop_center.x < smallDrop_center.x && mainDrop_center.y > smallDrop_center.y) {
+        _smallDropQuadrant = kQuadrant_First;
+    }
+    //  第二象限
+    else if (mainDrop_center.x > smallDrop_center.x && mainDrop_center.y > smallDrop_center.y){
+        _smallDropQuadrant = kQuadrant_Second;
+    }
+    //  第三象限
+    else if (mainDrop_center.x > smallDrop_center.x && mainDrop_center.y < smallDrop_center.y){
+        _smallDropQuadrant = kQuadrant_Third;
+    }
+    //  第四象限
+    else if (mainDrop_center.x < smallDrop_center.x && mainDrop_center.y < smallDrop_center.y){
+        _smallDropQuadrant = kQuadrant_Fourth;
+    }
     
-    //  smallDrop与lineCenter2Center的垂直平分线的交点
-    [self calucateCircleAndPerBiseLinePoint_withCircle:self.smallDrop.circleMath withDropView:self.smallDrop];
     
+    CGFloat centerPointDistance = [LineMath calucateDistanceBetweenPoint1:_circleMath.centerPoint withPoint2:smallDrop_layer.position];
+    
+    //  两圆无重叠
+    if (centerPointDistance > _circleMath.radius + _smallDrop.circleMath.radius) {
+        
+        //  bigDrop与lineCenter2Center的垂直平分线的交点
+        [self calucateCircleAndPerBiseLinePoint_withCircle:self.circleMath withDropView:self];
+        
+        //  smallDrop与lineCenter2Center的垂直平分线的交点
+        [self calucateCircleAndPerBiseLinePoint_withCircle:self.smallDrop.circleMath withDropView:self.smallDrop];
+    }
+    //  两圆有重叠
+    else{
+        NSLog(@"两圆有重叠");
+        [self calucateCircleWithCircleAcrossPoint];
+    }
     
     [_dropSuperView setNeedsDisplay];
 }
@@ -191,27 +224,55 @@
         dropView.edge_point1 = CGPointMake(x1_result, y1_result);
         dropView.edge_point2 = CGPointMake(x2_result, y2_result);
         
-        CGPoint mainDrop_center = CGPointMake(self.width/2, self.height/2);
-        CGPoint smallDrop_center = smallDrop_layer.position;
         //  edgePoint矫正
-        //  第一象限
-        if (mainDrop_center.x < smallDrop_center.x && mainDrop_center.y > smallDrop_center.y) {
+        switch (_smallDropQuadrant) {
+                //  第一象限
+            case kQuadrant_First:
                 dropView.edge_point1 = CGPointMake(x2_result, y2_result);
                 dropView.edge_point2 = CGPointMake(x1_result, y1_result);
-        }
-        //  第二象限
-        else if (mainDrop_center.x > smallDrop_center.x && mainDrop_center.y > smallDrop_center.y){
+                break;
+                
+                //  第二象限
+            case kQuadrant_Second:
                 dropView.edge_point1 = CGPointMake(x2_result, y2_result);
                 dropView.edge_point2 = CGPointMake(x1_result, y1_result);
+                break;
+                
+                //  第三象限
+            case kQuadrant_Third:
+                
+                break;
+                
+                //  第四象限
+            case kQuadrant_Fourth:
+                
+                break;
+                
+            default:
+                break;
         }
-        //  第三象限
-        else if (mainDrop_center.x > smallDrop_center.x && mainDrop_center.y < smallDrop_center.y){
-            
-        }
-        //  第四象限
-        else if (mainDrop_center.x < smallDrop_center.x && mainDrop_center.y < smallDrop_center.y){
-            
-        }
+        
+//        CGPoint mainDrop_center = CGPointMake(self.width/2, self.height/2);
+//        CGPoint smallDrop_center = smallDrop_layer.position;
+//        //  edgePoint矫正
+//        //  第一象限
+//        if (mainDrop_center.x < smallDrop_center.x && mainDrop_center.y > smallDrop_center.y) {
+//                dropView.edge_point1 = CGPointMake(x2_result, y2_result);
+//                dropView.edge_point2 = CGPointMake(x1_result, y1_result);
+//        }
+//        //  第二象限
+//        else if (mainDrop_center.x > smallDrop_center.x && mainDrop_center.y > smallDrop_center.y){
+//                dropView.edge_point1 = CGPointMake(x2_result, y2_result);
+//                dropView.edge_point2 = CGPointMake(x1_result, y1_result);
+//        }
+//        //  第三象限
+//        else if (mainDrop_center.x > smallDrop_center.x && mainDrop_center.y < smallDrop_center.y){
+//            
+//        }
+//        //  第四象限
+//        else if (mainDrop_center.x < smallDrop_center.x && mainDrop_center.y < smallDrop_center.y){
+//            
+//        }
         
         LineMath *perBiseLine_BigDrop_result = [[LineMath alloc] initWithPoint1:dropView.edge_point1 point2:dropView.edge_point2 inView:self];
         [_dropSuperView.lineArray addObject:perBiseLine_BigDrop_result];
@@ -221,6 +282,86 @@
     }else{
 //        NSLog(@"无解");
     }
+}
+
+
+/** 计算两圆有重叠时的交点
+ *
+ *  r1  小圆半径
+ *  r2  大圆半径
+ *  x   两圆心的距离
+ *  x1  小圆圆心和两圆焦点连线的距离
+ *  x2  大圆圆心和两圆焦点连线的距离
+ *  x3  两圆连线的线长的一半长度
+ *
+ *  (x_o,y_o)   两圆圆心连线和两圆焦点连线的交点
+ *  verLine     两圆心连线基于点(x_o,y_o)的垂线
+ */
+- (void)calucateCircleWithCircleAcrossPoint
+{
+    CGFloat r1 = _smallDrop.circleMath.radius;
+    CGFloat r2 = _circleMath.radius;
+    CALayer *smallDrop_layer = _smallDrop.layer.presentationLayer;
+    CGFloat x  = [LineMath calucateDistanceBetweenPoint1:_circleMath.centerPoint withPoint2:smallDrop_layer.position];
+    CGFloat x1;
+    CGFloat x2;
+    CGFloat x3;
+    CGFloat x_o;
+    CGFloat y_o;
+    
+    x1 = ( (r1*r1) - (r2*r2) + (x*x)) / (2 * x);
+    x2 = x - x1;
+    x3 = sqrt((r1*r1) - (x1*x1));
+    
+    CGFloat angle = atan(_lineCenter2Center.k);
+    //  edgePoint矫正
+    switch (_smallDropQuadrant) {
+            //  第一象限
+        case kQuadrant_First:
+            x_o = self.width/2 + cos(angle) * x2;
+            break;
+            
+            //  第二象限
+        case kQuadrant_Second:
+            x_o = self.width/2 - cos(angle) * x2;
+            break;
+            
+            //  第三象限
+        case kQuadrant_Third:
+            x_o = self.width/2 - cos(angle) * x2;
+            break;
+            
+            //  第四象限
+        case kQuadrant_Fourth:
+            x_o = self.width/2 + cos(angle) * x2;
+            break;
+            
+        default:
+            break;
+    }
+    
+    
+    NSLog(@"self.width/2:%f", self.width/2);
+    NSLog(@"x_o:%f", x_o);
+    y_o = _lineCenter2Center.k * x_o + _lineCenter2Center.b;
+
+    LineMath *tempLine = [[LineMath alloc] initWithPoint1:CGPointMake(self.width/2, self.height/2) point2:CGPointMake(x_o, y_o) inView:self];
+    [_dropSuperView.lineArray addObject:tempLine];
+    
+    CGFloat xxx = (x_o*x_o) + (y_o*y_o) - (x2*x2);
+    NSLog(@"xxx:%f", xxx);
+    
+    //  Center2Centerde的垂线 VerticalLine
+    LineMath *verLine = [[LineMath alloc] init];
+    angle += M_PI/2;
+    if (angle > M_PI/2) {
+        angle -= M_PI;
+    }else if (angle < - M_PI/2){
+        angle += M_PI;
+    }
+    verLine.k = tan(angle);
+    verLine.b = y_o - verLine.k * x_o;
+    
 }
 
 @end
