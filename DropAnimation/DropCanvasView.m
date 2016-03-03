@@ -95,54 +95,54 @@
     CALayer *smallDrop_layer = dropView.smallDrop.layer.presentationLayer;
     CGPoint smallDrop_center = [dropView convertPoint:smallDrop_layer.position toView:self];
     
-//    //  绘制主DropView
-//    CGFloat centerDistance = [LineMath calucateDistanceBetweenPoint1:mainDrop_center withPoint2:smallDrop_center];
-//    if (centerDistance > (dropView.width - dropView.smallDrop.width)/2) {
-////        NSLog(@"超出");
-//        
-//        CGFloat tempAngle = atan(dropView.lineCenter2Center.k);
-//        
-//        //  垂直平分线的斜率k矫正
-//        //  第一象限
-//        if (mainDrop_center.x < smallDrop_center.x && mainDrop_center.y > smallDrop_center.y) {
-//            tempAngle += M_PI/2;
-//        }
-//        //  第二象限
-//        else if (mainDrop_center.x > smallDrop_center.x && mainDrop_center.y > smallDrop_center.y){
-//            tempAngle -= M_PI/2;
-//        }
-//        //  第三象限
-//        else if (mainDrop_center.x > smallDrop_center.x && mainDrop_center.y < smallDrop_center.y){
-//            tempAngle -= M_PI/2;
-//        }
-//        //  第四象限
-//        else if (mainDrop_center.x < smallDrop_center.x && mainDrop_center.y < smallDrop_center.y){
-//            tempAngle += M_PI/2;
-//        }
-//        
-//        [dropView.bezierPath removeAllPoints];
-//        
-//        //  MainDrop 半圆
-//        [dropView.bezierPath addArcWithCenter:mainDrop_center radius:dropView.circleMath.radius startAngle:tempAngle endAngle:tempAngle + M_PI clockwise:YES];
-//        
-//        //  MainDrop->SmallDrop贝赛尔曲线
-//        CGPoint mainEdgePoint1 = [dropView convertPoint:dropView.edge_point1 toView:self];
-//        CGPoint smallEdgePoint2 = [dropView convertPoint:dropView.smallDrop.edge_point2 toView:self];
-//        CGPoint controlPoint = CGPointMake((mainDrop_center.x + smallDrop_center.x)/2, (mainDrop_center.y + smallDrop_center.y)/2);
-//        
-//        [dropView.bezierPath addQuadCurveToPoint:smallEdgePoint2 controlPoint:controlPoint];
-//        
-//        //  SmallDrop 半圆
-//        [dropView.bezierPath addArcWithCenter:smallDrop_center radius:dropView.smallDrop.circleMath.radius startAngle:tempAngle + M_PI endAngle:tempAngle clockwise:YES];
-//        
-//        //  SmallDrop->MainDrop贝赛尔曲线
-//        [dropView.bezierPath addQuadCurveToPoint:mainEdgePoint1 controlPoint:controlPoint];
-//
-//    }else{
-////        NSLog(@"在里面");
-//        [dropView.bezierPath removeAllPoints];
-//        [dropView.bezierPath addArcWithCenter:mainDrop_center radius:dropView.width/2 startAngle:0 endAngle:2 * M_PI clockwise:YES];
-//    }
+    //  绘制主DropView
+    CGFloat centerDistance = [LineMath calucateDistanceBetweenPoint1:mainDrop_center withPoint2:smallDrop_center];
+    if (centerDistance > (dropView.width - dropView.smallDrop.width)/2) {
+//        NSLog(@"超出");
+        
+        CGFloat tempAngle = atan(dropView.lineCenter2Center.k);
+        
+        //  垂直平分线的斜率k矫正
+        //  第一象限
+        if (mainDrop_center.x < smallDrop_center.x && mainDrop_center.y > smallDrop_center.y) {
+            tempAngle += M_PI/2;
+        }
+        //  第二象限
+        else if (mainDrop_center.x > smallDrop_center.x && mainDrop_center.y > smallDrop_center.y){
+            tempAngle -= M_PI/2;
+        }
+        //  第三象限
+        else if (mainDrop_center.x > smallDrop_center.x && mainDrop_center.y < smallDrop_center.y){
+            tempAngle -= M_PI/2;
+        }
+        //  第四象限
+        else if (mainDrop_center.x < smallDrop_center.x && mainDrop_center.y < smallDrop_center.y){
+            tempAngle += M_PI/2;
+        }
+        
+        [dropView.bezierPath removeAllPoints];
+        
+        //  MainDrop 半圆
+        [dropView.bezierPath addArcWithCenter:mainDrop_center radius:dropView.circleMath.radius startAngle:tempAngle endAngle:tempAngle + M_PI clockwise:YES];
+        
+        //  MainDrop->SmallDrop贝赛尔曲线
+        CGPoint mainEdgePoint1 = [dropView convertPoint:dropView.edge_point1 toView:self];
+        CGPoint smallEdgePoint2 = [dropView convertPoint:dropView.smallDrop.edge_point2 toView:self];
+        CGPoint controlPoint = CGPointMake((mainDrop_center.x + smallDrop_center.x)/2, (mainDrop_center.y + smallDrop_center.y)/2);
+        
+        [dropView.bezierPath addQuadCurveToPoint:smallEdgePoint2 controlPoint:controlPoint];
+        
+        //  SmallDrop 半圆
+        [dropView.bezierPath addArcWithCenter:smallDrop_center radius:dropView.smallDrop.circleMath.radius startAngle:tempAngle + M_PI endAngle:tempAngle clockwise:YES];
+        
+        //  SmallDrop->MainDrop贝赛尔曲线
+        [dropView.bezierPath addQuadCurveToPoint:mainEdgePoint1 controlPoint:controlPoint];
+
+    }else{
+//        NSLog(@"在里面");
+        [dropView.bezierPath removeAllPoints];
+        [dropView.bezierPath addArcWithCenter:mainDrop_center radius:dropView.width/2 startAngle:0 endAngle:2 * M_PI clockwise:YES];
+    }
     
     dropView.dropShapLayer.path = dropView.bezierPath.CGPath;
     

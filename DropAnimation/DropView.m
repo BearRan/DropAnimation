@@ -158,7 +158,6 @@
     [_dropSuperView setNeedsDisplay];
 }
 
-
 /** 已知过圆心的直线方程，求圆与直线的两个交点
  *
  *  1，圆的方程
@@ -182,38 +181,26 @@
  *  dx          圆的半径
  *  a,b,c,delta 上面都已说明，不再解释
  */
-- (void)calucateCircleAndPerBiseLinePoint_withCircle:(CircleMath *)circle withDropView:(DropView *)dropView
+- (AcrossPointStruct)calucateCircleAndLineAcrossPoint_withCircle:(CircleMath *)circle withLine:(LineMath *)line
 {
     CGPoint tempCenter = [self convertPoint:circle.centerPoint fromView:circle.InView];
-    CALayer *smallDrop_layer = _smallDrop.layer.presentationLayer;
     CGFloat x0 = tempCenter.x;
     CGFloat y0 = tempCenter.y;
     
     
-    //  Center2Centerde的垂直平分线 perpendicularBisector
-    LineMath *perBiseLine = [[LineMath alloc] init];
-    CGFloat angle = atan(_lineCenter2Center.k);
-    angle += M_PI/2;
-    if (angle > M_PI/2) {
-        angle -= M_PI;
-    }else if (angle < - M_PI/2){
-        angle += M_PI;
-    }
-    perBiseLine.k = tan(angle);
-    perBiseLine.b = y0 - perBiseLine.k * x0;
-    
-    
-    CGFloat kLine = perBiseLine.k;
-    CGFloat bLine = perBiseLine.b;
+    CGFloat kLine = line.k;
+    CGFloat bLine = line.b;
     
     CGFloat dx = circle.radius;
     CGFloat a = ((kLine * kLine) + 1);
     CGFloat b = - ((2 * x0) - (2 * kLine * bLine) + (2 * kLine * y0));
     CGFloat c = (x0 * x0) + (bLine * bLine) - (2 * bLine * y0) + (y0 * y0) - (dx * dx);
     
+    AcrossPointStruct acrossPointStruct;
+    
     float delta = (b * b) - (4 * a * c);
     if (delta > 0) {
-//        NSLog(@"两个根");
+        //        NSLog(@"两个根");
         
         CGFloat x1_result = ((-b) - sqrt(delta)) / (2 * a);
         CGFloat y1_result = (kLine * x1_result) + bLine;
@@ -221,21 +208,21 @@
         CGFloat x2_result = ((-b) + sqrt(delta)) / (2 * a);
         CGFloat y2_result = (kLine * x2_result) + bLine;
         
-        dropView.edge_point1 = CGPointMake(x1_result, y1_result);
-        dropView.edge_point2 = CGPointMake(x2_result, y2_result);
+        acrossPointStruct.point1 = CGPointMake(x1_result, y1_result);
+        acrossPointStruct.point2 = CGPointMake(x2_result, y2_result);
         
         //  edgePoint矫正
         switch (_smallDropQuadrant) {
                 //  第一象限
             case kQuadrant_First:
-                dropView.edge_point1 = CGPointMake(x2_result, y2_result);
-                dropView.edge_point2 = CGPointMake(x1_result, y1_result);
+                acrossPointStruct.point1 = CGPointMake(x2_result, y2_result);
+                acrossPointStruct.point2 = CGPointMake(x1_result, y1_result);
                 break;
                 
                 //  第二象限
             case kQuadrant_Second:
-                dropView.edge_point1 = CGPointMake(x2_result, y2_result);
-                dropView.edge_point2 = CGPointMake(x1_result, y1_result);
+                acrossPointStruct.point1 = CGPointMake(x2_result, y2_result);
+                acrossPointStruct.point2 = CGPointMake(x1_result, y1_result);
                 break;
                 
                 //  第三象限
@@ -252,36 +239,39 @@
                 break;
         }
         
-//        CGPoint mainDrop_center = CGPointMake(self.width/2, self.height/2);
-//        CGPoint smallDrop_center = smallDrop_layer.position;
-//        //  edgePoint矫正
-//        //  第一象限
-//        if (mainDrop_center.x < smallDrop_center.x && mainDrop_center.y > smallDrop_center.y) {
-//                dropView.edge_point1 = CGPointMake(x2_result, y2_result);
-//                dropView.edge_point2 = CGPointMake(x1_result, y1_result);
-//        }
-//        //  第二象限
-//        else if (mainDrop_center.x > smallDrop_center.x && mainDrop_center.y > smallDrop_center.y){
-//                dropView.edge_point1 = CGPointMake(x2_result, y2_result);
-//                dropView.edge_point2 = CGPointMake(x1_result, y1_result);
-//        }
-//        //  第三象限
-//        else if (mainDrop_center.x > smallDrop_center.x && mainDrop_center.y < smallDrop_center.y){
-//            
-//        }
-//        //  第四象限
-//        else if (mainDrop_center.x < smallDrop_center.x && mainDrop_center.y < smallDrop_center.y){
-//            
-//        }
-        
-        LineMath *perBiseLine_BigDrop_result = [[LineMath alloc] initWithPoint1:dropView.edge_point1 point2:dropView.edge_point2 inView:self];
+        LineMath *perBiseLine_BigDrop_result = [[LineMath alloc] initWithPoint1:acrossPointStruct.point1 point2:acrossPointStruct.point2 inView:self];
         [_dropSuperView.lineArray addObject:perBiseLine_BigDrop_result];
         
     }else if (delta == 0){
-//        NSLog(@"一个根");
+        //        NSLog(@"一个根");
     }else{
-//        NSLog(@"无解");
+        //        NSLog(@"无解");
     }
+    
+    return acrossPointStruct;
+}
+
+- (void)calucateCircleAndPerBiseLinePoint_withCircle:(CircleMath *)circle withDropView:(DropView *)dropView
+{
+    CGPoint tempCenter = [self convertPoint:circle.centerPoint fromView:circle.InView];
+    CGFloat x0 = tempCenter.x;
+    CGFloat y0 = tempCenter.y;
+    
+    //  Center2Centerde的垂直平分线 perpendicularBisector
+    LineMath *perBiseLine = [[LineMath alloc] init];
+    CGFloat angle = atan(_lineCenter2Center.k);
+    angle += M_PI/2;
+    if (angle > M_PI/2) {
+        angle -= M_PI;
+    }else if (angle < - M_PI/2){
+        angle += M_PI;
+    }
+    perBiseLine.k = tan(angle);
+    perBiseLine.b = y0 - perBiseLine.k * x0;
+    
+    AcrossPointStruct acrossPointStruct = [self calucateCircleAndLineAcrossPoint_withCircle:circle withLine:perBiseLine];
+    dropView.edge_point1 = acrossPointStruct.point1;
+    dropView.edge_point2 = acrossPointStruct.point2;
 }
 
 

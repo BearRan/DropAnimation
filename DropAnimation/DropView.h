@@ -12,6 +12,11 @@
 #import "CircleMath.h"
 #import "LineMath.h"
 
+typedef struct {
+    CGPoint point1;
+    CGPoint point2;
+}AcrossPointStruct;
+
 typedef enum {
     kQuadrant_First,
     kQuadrant_Second,
