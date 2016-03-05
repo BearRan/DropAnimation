@@ -52,7 +52,8 @@
 {
     [super drawRect:rect];
     
-    [self drawDropView:_mainDrop];
+//    [self drawDropView:_mainDrop];
+    [self drawAssistantLine];
 }
 
 
@@ -153,7 +154,7 @@
         __block CGFloat angleLine_MainP2 = atan(lineP2_MainCenter.k);
         
         //  两圆焦点和圆心连线的line的 斜率矫正
-        [self eventInDiffQuadrantWithCenterPoint:mainDrop_center withParaPoint:mainEdgePoint1 quadrantFirst:^{
+        [DropView eventInDiffQuadrantWithCenterPoint:mainDrop_center withParaPoint:mainEdgePoint1 quadrantFirst:^{
             nil;
         } quadrantSecond:^{
             angleLine_MainP1 -= M_PI;
@@ -163,7 +164,7 @@
             nil;
         }];
         
-        [self eventInDiffQuadrantWithCenterPoint:mainDrop_center withParaPoint:mainEdgePoint2 quadrantFirst:^{
+        [DropView eventInDiffQuadrantWithCenterPoint:mainDrop_center withParaPoint:mainEdgePoint2 quadrantFirst:^{
             nil;
         } quadrantSecond:^{
             angleLine_MainP2 -= M_PI;
@@ -184,7 +185,7 @@
         __block CGFloat angleLine_SmallP2 = atan(lineP2_SmallCenter.k);
         
         //  两圆焦点和圆心连线的line的 斜率矫正
-        [self eventInDiffQuadrantWithCenterPoint:smallDrop_center withParaPoint:smallEdgePoint1 quadrantFirst:^{
+        [DropView eventInDiffQuadrantWithCenterPoint:smallDrop_center withParaPoint:smallEdgePoint1 quadrantFirst:^{
             nil;
         } quadrantSecond:^{
             angleLine_SmallP1 -= M_PI;
@@ -194,7 +195,7 @@
             nil;
         }];
         
-        [self eventInDiffQuadrantWithCenterPoint:smallDrop_center withParaPoint:smallEdgePoint2 quadrantFirst:^{
+        [DropView eventInDiffQuadrantWithCenterPoint:smallDrop_center withParaPoint:smallEdgePoint2 quadrantFirst:^{
             nil;
         } quadrantSecond:^{
             angleLine_SmallP2-= M_PI;
@@ -215,56 +216,15 @@
     }
     
     dropView.dropShapLayer.path = dropView.bezierPath.CGPath;
-    
+}
+
+- (void)drawAssistantLine
+{
     //  绘制辅助线
     for (LineMath *lineMath in _lineArray) {
         CGPoint point1 = [lineMath.InView convertPoint:lineMath.point1 toView:self];
         CGPoint point2 = [lineMath.InView convertPoint:lineMath.point2 toView:self];
         [self drawLineWithLayer:point1 endPoint:point2 lineWidth:1.0f lineColor:[UIColor blackColor]];
-    }
-}
-
-
-/** 判断点所处象限
- *
- *  centerPoint 作为圆心的点
- *  paraPoint   以centerPoint为坐标原点，判断paraPoint所在的象限
- *
- *  quadrantFirst   第一象限
- *  quadrantSecond  第二象限
- *  quadrantThird   第三象限
- *  quadrantFourth  第四象限
- */
-- (void)eventInDiffQuadrantWithCenterPoint:(CGPoint)centerPoint
-                             withParaPoint:(CGPoint)paraPoint
-                             quadrantFirst:(void (^)())quadrantFirst
-                            quadrantSecond:(void (^)())quadrantSecond
-                             quadrantThird:(void (^)())quadrantThird
-                            quadrantFourth:(void (^)())quadrantFourth
-{
-    //  第一象限
-    if (centerPoint.x < paraPoint.x && centerPoint.y > paraPoint.y) {
-        if (quadrantFirst) {
-            quadrantFirst();
-        }
-    }
-    //  第二象限
-    else if (centerPoint.x > paraPoint.x && centerPoint.y > paraPoint.y){
-        if (quadrantSecond) {
-            quadrantSecond();
-        }
-    }
-    //  第三象限
-    else if (centerPoint.x > paraPoint.x && centerPoint.y < paraPoint.y){
-        if (quadrantThird) {
-            quadrantThird();
-        }
-    }
-    //  第四象限
-    else if (centerPoint.x < paraPoint.x && centerPoint.y < paraPoint.y){
-        if (quadrantFourth) {
-            quadrantFourth();
-        }
     }
 }
 

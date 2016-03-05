@@ -108,6 +108,7 @@
     }
 }
 
+//  计算坐标
 - (void)calucateCoordinate
 {
     [_dropSuperView.lineArray removeAllObjects];
@@ -140,25 +141,72 @@
     
     CGFloat centerPointDistance = [LineMath calucateDistanceBetweenPoint1:_circleMath.centerPoint withPoint2:smallDrop_layer.position];
     
-    //  两圆无重叠
-    if (centerPointDistance > _circleMath.radius + _smallDrop.circleMath.radius) {
-        
-        //  bigDrop与lineCenter2Center的垂直平分线的交点
-        [self calucateCircleAndPerBiseLinePoint_withCircle:self.circleMath withDropView:self];
-        
-        //  smallDrop与lineCenter2Center的垂直平分线的交点
-        [self calucateCircleAndPerBiseLinePoint_withCircle:self.smallDrop.circleMath withDropView:self.smallDrop];
-    }
-    //  两圆有重叠
-    else{
-        NSLog(@"两圆有重叠");
-        [self calucateCircleWithCircleAcrossPoint];
-    }
+//    //  两圆无重叠
+//    if (centerPointDistance > _circleMath.radius + _smallDrop.circleMath.radius) {
+//        
+//        //  bigDrop与lineCenter2Center的垂直平分线的交点
+//        [self calucateCircleAndPerBiseLinePoint_withCircle:self.circleMath withDropView:self];
+//        
+//        //  smallDrop与lineCenter2Center的垂直平分线的交点
+//        [self calucateCircleAndPerBiseLinePoint_withCircle:self.smallDrop.circleMath withDropView:self.smallDrop];
+//    }
+//    //  两圆有重叠
+//    else{
+//        NSLog(@"两圆有重叠");
+//        [self calucateCircleWithCircleAcrossPoint];
+//    }
+    
+    [self calucateTangentLine];
     
     [_dropSuperView setNeedsDisplay];
 }
 
 
+#pragma mark - 计算两圆的切线
+/** 计算两圆的切线
+ *
+ *  两圆中心连线和切线的交点
+ *  r1  小圆半径
+ *  r2  大圆半径
+ *  d2  大圆和小圆中心的距离
+ *  d1  小圆中心和切线交点的距离
+ *
+ *
+ *
+ *
+ */
+- (void)calucateTangentLine
+{
+    CGFloat r1 = _smallDrop.circleMath.radius;
+    CGFloat r2 = _circleMath.radius;
+    CALayer *smallDrop_layer = _smallDrop.layer.presentationLayer;
+    CGFloat d2 = [LineMath calucateDistanceBetweenPoint1:_circleMath.centerPoint withPoint2:smallDrop_layer.position];
+    CGFloat d1 = (r1 * d2) / (r2 - r1);
+    
+    CircleMath *tempCircle = [[CircleMath alloc] initWithCenterPoint:_circleMath.centerPoint
+                                                              radius:(d2 + d1)
+                                                              inView:self];
+    AcrossPointStruct acrossPointStruct = [self calucateCircleAndLineAcrossPoint_withCircle:tempCircle withLine:_lineCenter2Center];
+    
+    __block LineMath *line1  = [[LineMath alloc] initWithPoint1:_circleMath.centerPoint point2:acrossPointStruct.point1 inView:self];
+    
+    
+    [DropView eventInDiffQuadrantWithCenterPoint:_circleMath.centerPoint
+                                   withParaPoint:smallDrop_layer.position
+                                   quadrantFirst:^{
+                                       nil;
+                                   } quadrantSecond:^{
+                                       line1.point2 = acrossPointStruct.point2;
+                                   } quadrantThird:^{
+                                       nil;
+                                   } quadrantFourth:^{
+                                       line1.point2 = acrossPointStruct.point2;
+                                   }];
+    
+    [_dropSuperView.lineArray addObject:line1];
+}
+
+#pragma mark - 计算Center2Center过圆心的垂直平分线和DropView的交点
 //  计算Center2Center过圆心的垂直平分线和DropView的交点
 - (void)calucateCircleAndPerBiseLinePoint_withCircle:(CircleMath *)circle withDropView:(DropView *)dropView
 {
@@ -181,101 +229,13 @@
     AcrossPointStruct acrossPointStruct = [self calucateCircleAndLineAcrossPoint_withCircle:circle withLine:perBiseLine];
     dropView.edge_point1 = acrossPointStruct.point1;
     dropView.edge_point2 = acrossPointStruct.point2;
+    
+    LineMath *perBiseLine_BigDrop_result = [[LineMath alloc] initWithPoint1:acrossPointStruct.point1 point2:acrossPointStruct.point2 inView:self];
+    [_dropSuperView.lineArray addObject:perBiseLine_BigDrop_result];
 }
 
 
-/** 已知过圆心的直线方程，求圆与直线的两个交点
- *
- *  1，圆的方程
- *  dx方 = (x2 - x1)方 + (y2 - y1)方
- *  2，直线方程
- *  y = kx + b
- *
- *  联立1，2方程式，得出二次函数
- *  ax方 + bx + c = 0
- *  其中：
- *  a = ((kLine * kLine) + 1)
- *  b = - ((2 * x0) - (2 * kLine * bLine) + (2 * kLine * y0))
- *  c = (x0 * x0) + (bLine * bLine) - (2 * bLine * y0) + (y0 * y0) - (dx * dx)
- *  delta = b方 - 4ac
- *  解出该二次函数的两个根，就能得出圆与直线的两个交点的x值，从而得出圆与直线的两个交点的坐标
- *
- *  参数说明
- *  (x0, y0)    圆心坐标
- *  kLine       直线的斜率
- *  bLine       直线的b参数
- *  dx          圆的半径
- *  a,b,c,delta 上面都已说明，不再解释
- */
-- (AcrossPointStruct)calucateCircleAndLineAcrossPoint_withCircle:(CircleMath *)circle withLine:(LineMath *)line
-{
-    CGPoint tempCenter = [self convertPoint:circle.centerPoint fromView:circle.InView];
-    CGFloat x0 = tempCenter.x;
-    CGFloat y0 = tempCenter.y;
-
-    CGFloat kLine = line.k;
-    CGFloat bLine = line.b;
-    
-    CGFloat dx = circle.radius;
-    CGFloat a = ((kLine * kLine) + 1);
-    CGFloat b = - ((2 * x0) - (2 * kLine * bLine) + (2 * kLine * y0));
-    CGFloat c = (x0 * x0) + (bLine * bLine) - (2 * bLine * y0) + (y0 * y0) - (dx * dx);
-    AcrossPointStruct acrossPointStruct;
-    
-    float delta = (b * b) - (4 * a * c);
-    if (delta > 0) {
-        //        NSLog(@"两个根");
-        
-        CGFloat x1_result = ((-b) - sqrt(delta)) / (2 * a);
-        CGFloat y1_result = (kLine * x1_result) + bLine;
-        
-        CGFloat x2_result = ((-b) + sqrt(delta)) / (2 * a);
-        CGFloat y2_result = (kLine * x2_result) + bLine;
-        
-        acrossPointStruct.point1 = CGPointMake(x1_result, y1_result);
-        acrossPointStruct.point2 = CGPointMake(x2_result, y2_result);
-        
-        //  edgePoint矫正
-        switch (_smallDropQuadrant) {
-                //  第一象限
-            case kQuadrant_First:
-                acrossPointStruct.point1 = CGPointMake(x2_result, y2_result);
-                acrossPointStruct.point2 = CGPointMake(x1_result, y1_result);
-                break;
-                
-                //  第二象限
-            case kQuadrant_Second:
-                acrossPointStruct.point1 = CGPointMake(x2_result, y2_result);
-                acrossPointStruct.point2 = CGPointMake(x1_result, y1_result);
-                break;
-                
-                //  第三象限
-            case kQuadrant_Third:
-                
-                break;
-                
-                //  第四象限
-            case kQuadrant_Fourth:
-                
-                break;
-                
-            default:
-                break;
-        }
-        
-        LineMath *perBiseLine_BigDrop_result = [[LineMath alloc] initWithPoint1:acrossPointStruct.point1 point2:acrossPointStruct.point2 inView:self];
-        [_dropSuperView.lineArray addObject:perBiseLine_BigDrop_result];
-        
-    }else if (delta == 0){
-        NSLog(@"圆与直线 一个交点");
-    }else{
-        NSLog(@"圆与直线 无交点");
-    }
-    
-    return acrossPointStruct;
-}
-
-
+#pragma mark - 计算两圆有重叠时的交点
 /** 计算两圆有重叠时的交点
  *
  *  r1  小圆半径
@@ -346,6 +306,7 @@
     }
     verLine.k = tan(angle);
     verLine.b = y_o - verLine.k * x_o;
+    verLine.InView = self;
     
     AcrossPointStruct acrossPointStruct = [self calucateCircleAndLineAcrossPoint_withCircle:_circleMath withLine:verLine];
     verLine.point1 = acrossPointStruct.point1;
@@ -358,6 +319,140 @@
     _smallDrop.edge_point2 = verLine.point2;
     
     [_dropSuperView.lineArray addObject:verLine];
+}
+
+
+#pragma mark - 已知过圆的直线方程，求圆与直线的两个交点
+/** 已知过圆的直线方程，求圆与直线的两个交点
+ *
+ *  1，圆的方程
+ *  dx方 = (x2 - x1)方 + (y2 - y1)方
+ *  2，直线方程
+ *  y = kx + b
+ *
+ *  联立1，2方程式，得出二次函数
+ *  ax方 + bx + c = 0
+ *  其中：
+ *  a = ((kLine * kLine) + 1)
+ *  b = - ((2 * x0) - (2 * kLine * bLine) + (2 * kLine * y0))
+ *  c = (x0 * x0) + (bLine * bLine) - (2 * bLine * y0) + (y0 * y0) - (dx * dx)
+ *  delta = b方 - 4ac
+ *  解出该二次函数的两个根，就能得出圆与直线的两个交点的x值，从而得出圆与直线的两个交点的坐标
+ *
+ *  参数说明
+ *  (x0, y0)    圆心坐标
+ *  kLine       直线的斜率
+ *  bLine       直线的b参数
+ *  dx          圆的半径
+ *  a,b,c,delta 上面都已说明，不再解释
+ */
+- (AcrossPointStruct)calucateCircleAndLineAcrossPoint_withCircle:(CircleMath *)circle withLine:(LineMath *)line
+{
+    CGPoint tempCenter = [self convertPoint:circle.centerPoint fromView:circle.InView];
+    CGFloat x0 = tempCenter.x;
+    CGFloat y0 = tempCenter.y;
+    
+    CGFloat kLine = line.k;
+    CGFloat bLine = line.b;
+    
+    CGFloat r = circle.radius;
+    CGFloat a = ((kLine * kLine) + 1);
+    CGFloat b = - ((2 * x0) - (2 * kLine * bLine) + (2 * kLine * y0));
+    CGFloat c = (x0 * x0) + (bLine * bLine) - (2 * bLine * y0) + (y0 * y0) - (r * r);
+    AcrossPointStruct acrossPointStruct;
+    
+    float delta = (b * b) - (4 * a * c);
+    if (delta > 0) {
+        //        NSLog(@"两个根");
+        
+        CGFloat x1_result = ((-b) - sqrt(delta)) / (2 * a);
+        CGFloat y1_result = (kLine * x1_result) + bLine;
+        
+        CGFloat x2_result = ((-b) + sqrt(delta)) / (2 * a);
+        CGFloat y2_result = (kLine * x2_result) + bLine;
+        
+        acrossPointStruct.point1 = CGPointMake(x1_result, y1_result);
+        acrossPointStruct.point2 = CGPointMake(x2_result, y2_result);
+        
+        //  edgePoint矫正
+        switch (_smallDropQuadrant) {
+                //  第一象限
+            case kQuadrant_First:
+                acrossPointStruct.point1 = CGPointMake(x2_result, y2_result);
+                acrossPointStruct.point2 = CGPointMake(x1_result, y1_result);
+                break;
+                
+                //  第二象限
+            case kQuadrant_Second:
+                acrossPointStruct.point1 = CGPointMake(x2_result, y2_result);
+                acrossPointStruct.point2 = CGPointMake(x1_result, y1_result);
+                break;
+                
+                //  第三象限
+            case kQuadrant_Third:
+                
+                break;
+                
+                //  第四象限
+            case kQuadrant_Fourth:
+                
+                break;
+                
+            default:
+                break;
+        }
+        
+    }else if (delta == 0){
+        NSLog(@"圆与直线 一个交点");
+    }else{
+        NSLog(@"圆与直线 无交点");
+    }
+    
+    return acrossPointStruct;
+}
+
+
+/** 判断点所处象限
+ *
+ *  centerPoint 作为圆心的点
+ *  paraPoint   以centerPoint为坐标原点，判断paraPoint所在的象限
+ *
+ *  quadrantFirst   第一象限
+ *  quadrantSecond  第二象限
+ *  quadrantThird   第三象限
+ *  quadrantFourth  第四象限
+ */
++ (void)eventInDiffQuadrantWithCenterPoint:(CGPoint)centerPoint
+                             withParaPoint:(CGPoint)paraPoint
+                             quadrantFirst:(void (^)())quadrantFirst
+                            quadrantSecond:(void (^)())quadrantSecond
+                             quadrantThird:(void (^)())quadrantThird
+                            quadrantFourth:(void (^)())quadrantFourth
+{
+    //  第一象限
+    if (centerPoint.x < paraPoint.x && centerPoint.y > paraPoint.y) {
+        if (quadrantFirst) {
+            quadrantFirst();
+        }
+    }
+    //  第二象限
+    else if (centerPoint.x > paraPoint.x && centerPoint.y > paraPoint.y){
+        if (quadrantSecond) {
+            quadrantSecond();
+        }
+    }
+    //  第三象限
+    else if (centerPoint.x > paraPoint.x && centerPoint.y < paraPoint.y){
+        if (quadrantThird) {
+            quadrantThird();
+        }
+    }
+    //  第四象限
+    else if (centerPoint.x < paraPoint.x && centerPoint.y < paraPoint.y){
+        if (quadrantFourth) {
+            quadrantFourth();
+        }
+    }
 }
 
 @end

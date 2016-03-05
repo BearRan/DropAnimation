@@ -40,4 +40,21 @@ typedef enum {
 
 - (instancetype)initWithFrame:(CGRect)frame createSmallDrop:(BOOL)createSmallDrop;
 
+/** 判断点所处象限
+ *
+ *  centerPoint 作为圆心的点
+ *  paraPoint   以centerPoint为坐标原点，判断paraPoint所在的象限
+ *
+ *  quadrantFirst   第一象限
+ *  quadrantSecond  第二象限
+ *  quadrantThird   第三象限
+ *  quadrantFourth  第四象限
+ */
++ (void)eventInDiffQuadrantWithCenterPoint:(CGPoint)centerPoint
+                             withParaPoint:(CGPoint)paraPoint
+                             quadrantFirst:(void (^)())quadrantFirst
+                            quadrantSecond:(void (^)())quadrantSecond
+                             quadrantThird:(void (^)())quadrantThird
+                            quadrantFourth:(void (^)())quadrantFourth;
+
 @end
