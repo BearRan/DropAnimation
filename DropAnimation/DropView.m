@@ -183,27 +183,62 @@
     CGFloat d2 = [LineMath calucateDistanceBetweenPoint1:_circleMath.centerPoint withPoint2:smallDrop_layer.position];
     CGFloat d1 = (r1 * d2) / (r2 - r1);
     
+    
+    /******     大圆圆心到_lineCenter2Center和切线交点的连线     ******/
+    
     CircleMath *tempCircle = [[CircleMath alloc] initWithCenterPoint:_circleMath.centerPoint
                                                               radius:(d2 + d1)
                                                               inView:self];
     AcrossPointStruct acrossPointStruct = [self calucateCircleAndLineAcrossPoint_withCircle:tempCircle withLine:_lineCenter2Center];
     
-    __block LineMath *line1  = [[LineMath alloc] initWithPoint1:_circleMath.centerPoint point2:acrossPointStruct.point1 inView:self];
-    
-    
+    //  _lineCenter2Center和两圆切线的交点
+    __block CGPoint acrossPoint;
     [DropView eventInDiffQuadrantWithCenterPoint:_circleMath.centerPoint
                                    withParaPoint:smallDrop_layer.position
                                    quadrantFirst:^{
-                                       nil;
+                                       acrossPoint = acrossPointStruct.point1;
                                    } quadrantSecond:^{
-                                       line1.point2 = acrossPointStruct.point2;
+                                       acrossPoint = acrossPointStruct.point2;
                                    } quadrantThird:^{
-                                       nil;
+                                       acrossPoint = acrossPointStruct.point1;
                                    } quadrantFourth:^{
-                                       line1.point2 = acrossPointStruct.point2;
+                                       acrossPoint = acrossPointStruct.point2;
                                    }];
     
+    //  大圆圆心到_lineCenter2Center和切线交点的连线
+    LineMath *line1  = [[LineMath alloc] initWithPoint1:_circleMath.centerPoint point2:acrossPoint inView:self];
     [_dropSuperView.lineArray addObject:line1];
+    
+    
+    /******     两圆的切线       ******/
+    
+    CGFloat angle = atan(_lineCenter2Center.k);
+    CGFloat angleDelta = atan(r1 / d1);
+    
+    //  切线1
+    CGFloat angle_TangentLine1 = angle - angleDelta;
+    LineMath *line_Tangent1 = [[LineMath alloc] init];
+    line_Tangent1.k = tan(angle_TangentLine1);
+    line_Tangent1.b = acrossPoint.y - line_Tangent1.k * acrossPoint.x;
+    
+    AcrossPointStruct acrossPointStruct_Tangent1 = [self calucateCircleAndLineAcrossPoint_withCircle:_circleMath withLine:line_Tangent1];
+    line_Tangent1.point1 = acrossPoint;
+    line_Tangent1.point2 = acrossPointStruct_Tangent1.point1;
+    line_Tangent1.InView = self;
+    [_dropSuperView.lineArray addObject:line_Tangent1];
+    
+    
+    //  切线2
+    CGFloat angle_TangentLine2 = angle + angleDelta;
+    LineMath *line_Tangent2 = [[LineMath alloc] init];
+    line_Tangent2.k = tan(angle_TangentLine2);
+    line_Tangent2.b = acrossPoint.y - line_Tangent2.k * acrossPoint.x;
+    
+    AcrossPointStruct acrossPointStruct_Tangent2 = [self calucateCircleAndLineAcrossPoint_withCircle:_circleMath withLine:line_Tangent2];
+    line_Tangent2.point1 = acrossPoint;
+    line_Tangent2.point2 = acrossPointStruct_Tangent2.point1;
+    line_Tangent2.InView = self;
+    [_dropSuperView.lineArray addObject:line_Tangent2];
 }
 
 #pragma mark - 计算Center2Center过圆心的垂直平分线和DropView的交点
