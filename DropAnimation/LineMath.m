@@ -87,6 +87,14 @@
     return acrossPoint;
 }
 
+//  计算两点的中点
++ (CGPoint)calucateCenterPointBetweenPoint1:(CGPoint)point1 withPoint2:(CGPoint)point2
+{
+    CGPoint centerPoint = CGPointMake((point1.x + point2.x)/2, (point1.y + point2.y)/2);
+    
+    return centerPoint;
+}
+
 
 
 @end

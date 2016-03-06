@@ -41,22 +41,138 @@
 - (void)createMainDrop
 {
     CGFloat mainDrop_width = 150;
-    _mainDrop = [[DropView alloc] initWithFrame:CGRectMake(0, 0, mainDrop_width, mainDrop_width) createSmallDrop:YES];
+    _mainDrop = [[DropView alloc] initWithFrame:CGRectMake(mainDrop_width, mainDrop_width, mainDrop_width, mainDrop_width) createSmallDrop:YES];
     _mainDrop.dropSuperView = self;
     [self.layer addSublayer:_mainDrop.dropShapLayer];
     [self addSubview:_mainDrop];
-    [_mainDrop BearSetCenterToParentViewWithAxis:kAXIS_X_Y];
+//    [_mainDrop BearSetCenterToParentViewWithAxis:kAXIS_X_Y];
 }
 
 - (void)drawRect:(CGRect)rect
 {
     [super drawRect:rect];
     
+    [self drawDrop1View:_mainDrop];
 //    [self drawDropView:_mainDrop];
     [self drawAssistantLine];
 }
 
 
+
+
+/***********************
+ 角度说明
+ 
+ 90度
+ |
+ |
+ |
+ |
+ 0度  ----------------  180度
+ |
+ －30或者330  |
+ |
+ |
+ 270 度
+ 
+ **************************/
+
+/** 绘制DropView
+ *
+ *  mainDrop_center         mainDrop中心点
+ *  smallDrop_presentLayer  smallDrop演示图层
+ *  smallDrop_center        smallDrop中心点
+ *  centerDistance          mainDrop和smallDrop中心的距离
+ */
+- (void)drawDrop1View:(DropView *)dropView
+{
+    CALayer *smallDrop_presentLayer = dropView.smallDrop.layer.presentationLayer;
+    if (smallDrop_presentLayer == nil) {
+        return;
+    }
+    
+    CGPoint mainDrop_center = dropView.center;
+    CGPoint smallDrop_center = [dropView convertPoint:smallDrop_presentLayer.position toView:self];
+    CGFloat centerDistance = [LineMath calucateDistanceBetweenPoint1:mainDrop_center withPoint2:smallDrop_center];
+    
+    CGPoint mainEdgePoint1 = [dropView convertPoint:dropView.edge_point1 toView:self];
+    CGPoint mainEdgePoint2 = [dropView convertPoint:dropView.edge_point2 toView:self];
+    CGPoint smallEdgePoint1 = [dropView convertPoint:dropView.smallDrop.edge_point1 toView:self];
+    CGPoint smallEdgePoint2 = [dropView convertPoint:dropView.smallDrop.edge_point2 toView:self];
+
+    CGPoint bezierControlPoint1 = [dropView convertPoint:dropView.bezierControlPoint1 toView:self];
+    CGPoint bezierControlPoint2 = [dropView convertPoint:dropView.bezierControlPoint2 toView:self];
+    
+    /******    MainDrop和SmallDrop 相交   ******/
+    
+    
+        
+    [dropView.bezierPath removeAllPoints];
+    
+    //  MainDrop半圆
+    LineMath *lineP1_MainCenter = [[LineMath alloc] initWithPoint1:mainEdgePoint1 point2:mainDrop_center inView:self];
+    LineMath *lineP2_MainCenter = [[LineMath alloc] initWithPoint1:mainEdgePoint2 point2:mainDrop_center inView:self];
+    
+    __block CGFloat angleLine_MainP1 = atan(lineP1_MainCenter.k);
+    __block CGFloat angleLine_MainP2 = atan(lineP2_MainCenter.k);
+    
+    //  两圆焦点和圆心连线的line的 斜率矫正
+    [DropView eventInDiffQuadrantWithCenterPoint:mainDrop_center withParaPoint:mainEdgePoint1 quadrantFirst:^{
+        nil;
+    } quadrantSecond:^{
+        angleLine_MainP1 -= M_PI;
+    } quadrantThird:^{
+        angleLine_MainP1 -= M_PI;
+    } quadrantFourth:^{
+        nil;
+    }];
+    
+    [DropView eventInDiffQuadrantWithCenterPoint:mainDrop_center withParaPoint:mainEdgePoint2 quadrantFirst:^{
+        nil;
+    } quadrantSecond:^{
+        angleLine_MainP2 -= M_PI;
+    } quadrantThird:^{
+        angleLine_MainP2 -= M_PI;
+    } quadrantFourth:^{
+        nil;
+    }];
+    
+    [dropView.bezierPath addArcWithCenter:mainDrop_center radius:dropView.circleMath.radius startAngle:angleLine_MainP1 endAngle:angleLine_MainP2 clockwise:YES];
+    [dropView.bezierPath addQuadCurveToPoint:smallEdgePoint2 controlPoint:bezierControlPoint1];
+    
+    //  SmallDrop半圆
+    LineMath *lineP1_SmallCenter = [[LineMath alloc] initWithPoint1:smallEdgePoint1 point2:smallDrop_center inView:self];
+    LineMath *lineP2_SmallCenter = [[LineMath alloc] initWithPoint1:smallEdgePoint2 point2:smallDrop_center inView:self];
+    
+    __block CGFloat angleLine_SmallP1 = atan(lineP1_SmallCenter.k);
+    __block CGFloat angleLine_SmallP2 = atan(lineP2_SmallCenter.k);
+    
+    //  两圆焦点和圆心连线的line的 斜率矫正
+    [DropView eventInDiffQuadrantWithCenterPoint:smallDrop_center withParaPoint:smallEdgePoint1 quadrantFirst:^{
+        nil;
+    } quadrantSecond:^{
+        angleLine_SmallP1 -= M_PI;
+    } quadrantThird:^{
+        angleLine_SmallP1 -= M_PI;
+    } quadrantFourth:^{
+        nil;
+    }];
+    
+    [DropView eventInDiffQuadrantWithCenterPoint:smallDrop_center withParaPoint:smallEdgePoint2 quadrantFirst:^{
+        nil;
+    } quadrantSecond:^{
+        angleLine_SmallP2-= M_PI;
+    } quadrantThird:^{
+        angleLine_SmallP2 -= M_PI;
+    } quadrantFourth:^{
+        nil;
+    }];
+    
+    [dropView.bezierPath addArcWithCenter:smallDrop_center radius:dropView.smallDrop.circleMath.radius startAngle:angleLine_SmallP2 endAngle:angleLine_SmallP1 clockwise:YES];
+    [dropView.bezierPath addQuadCurveToPoint:mainEdgePoint1 controlPoint:bezierControlPoint2];
+    
+    dropView.dropShapLayer.path = dropView.bezierPath.CGPath;
+}
 
 
 /***********************

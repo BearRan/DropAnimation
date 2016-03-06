@@ -215,7 +215,8 @@
     CGFloat angle = atan(_lineCenter2Center.k);
     CGFloat angleDelta = atan(r1 / d1);
     
-    //  切线1
+    
+    /*** 切线1 ***/
     CGFloat angle_TangentLine1 = angle - angleDelta;
     LineMath *line_Tangent1 = [[LineMath alloc] init];
     line_Tangent1.k = tan(angle_TangentLine1);
@@ -261,7 +262,7 @@
     [_dropSuperView.lineArray addObject:tempLine2];
     
     
-    //  切线2
+    /*** 切线2 ***/
     CGFloat angle_TangentLine2 = angle + angleDelta;
     LineMath *line_Tangent2 = [[LineMath alloc] init];
     line_Tangent2.k = tan(angle_TangentLine2);
@@ -305,6 +306,36 @@
     AcrossPointStruct acrossPointStruct_Tangent2_PerBiseToSmallDrop = [self calucateCircleAndLineAcrossPoint_withCircle:_smallDrop.circleMath withLine:line_Tangent2_PerBiseToSmallDrop];
     LineMath *tempLine4 = [[LineMath alloc] initWithPoint1:acrossPointStruct_Tangent2_PerBiseToSmallDrop.point2 point2:smallDrop_layer.position inView:self];
     [_dropSuperView.lineArray addObject:tempLine4];
+    
+    
+    /******     计算贝赛尔需要的交点      ******/
+    CGPoint point1 = acrossPointStruct_Tangent1_PerBiseToSmallDrop.point1;
+    CGPoint point2 = acrossPointStruct_Tangent1_PerBiseToMainDrop.point1;
+    CGPoint point3 = acrossPointStruct_Tangent2_PerBiseToSmallDrop.point2;
+    CGPoint point4 = acrossPointStruct_Tangent2_PerBiseToMainDrop.point2;
+    CGPoint point_2_4Center = [LineMath calucateCenterPointBetweenPoint1:point2 withPoint2:point4];
+    
+    LineMath *line_P1_P4 = [[LineMath alloc] initWithPoint1:point1 point2:point4 inView:self];
+    LineMath *line_P2_P3 = [[LineMath alloc] initWithPoint1:point2 point2:point3 inView:self];
+    LineMath *line_P3_P2_4Center = [[LineMath alloc] initWithPoint1:point3 point2:point_2_4Center inView:self];
+    LineMath *line_P1_P2_4Center = [[LineMath alloc] initWithPoint1:point1 point2:point_2_4Center inView:self];
+    
+    [_dropSuperView.lineArray addObject:line_P1_P4];
+    [_dropSuperView.lineArray addObject:line_P2_P3];
+    [_dropSuperView.lineArray addObject:line_P3_P2_4Center];
+    [_dropSuperView.lineArray addObject:line_P1_P2_4Center];
+    
+    
+    _bezierControlPoint1 = [LineMath calucateAcrossPointBetweenLine1:line_P1_P4 withLine2:line_P3_P2_4Center];
+    _bezierControlPoint2 = [LineMath calucateAcrossPointBetweenLine1:line_P2_P3 withLine2:line_P1_P2_4Center];
+    _edge_point1 = point2;
+    _edge_point2 = point4;
+    _smallDrop.edge_point1 = point1;
+    _smallDrop.edge_point2 = point3;
+    _line_edgeP1_center = tempLine1;
+    _line_edgeP2_center = tempLine3;
+    _smallDrop.line_edgeP1_center = tempLine2;
+    _smallDrop.line_edgeP2_center = tempLine4;
 }
 
 #pragma mark - 计算Center2Center过圆心的垂直平分线和DropView的交点

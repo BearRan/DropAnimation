@@ -30,6 +30,10 @@ typedef enum {
 @property (strong, nonatomic) CircleMath    *circleMath;        //圆的方程
 @property (assign, nonatomic) CGPoint       edge_point1;        //圆心连线的垂线与圆的交点1
 @property (assign, nonatomic) CGPoint       edge_point2;        //圆心连线的垂线与圆的交点2
+@property (strong, nonatomic) LineMath      *line_edgeP1_center;//圆心连线的垂线与圆的交点1 和 圆心的连线
+@property (strong, nonatomic) LineMath      *line_edgeP2_center;//圆心连线的垂线与圆的交点2 和 圆心的连线
+@property (assign, nonatomic) CGPoint       bezierControlPoint1;//贝赛尔曲线控制点1
+@property (assign, nonatomic) CGPoint       bezierControlPoint2;//贝赛尔曲线控制点2
 
 @property (strong, nonatomic) DropView          *smallDrop;
 @property (assign, nonatomic) DropCanvasView    *dropSuperView;
