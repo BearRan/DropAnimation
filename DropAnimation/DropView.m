@@ -51,8 +51,8 @@
     
     _dropShapLayer = [CAShapeLayer layer];
     _dropShapLayer.fillColor = [[UIColor blueColor] colorWithAlphaComponent:0.4].CGColor;
-    _dropShapLayer.lineWidth = 5.0f;
-    _dropShapLayer.strokeColor = [UIColor blackColor].CGColor;
+    _dropShapLayer.lineWidth = 2.0f;
+    _dropShapLayer.strokeColor = [[UIColor blackColor] colorWithAlphaComponent:0.7].CGColor;
     _dropShapLayer.strokeStart = 0;
     _dropShapLayer.strokeEnd = 1;
     
@@ -314,6 +314,7 @@
     CGPoint point3 = acrossPointStruct_Tangent2_PerBiseToSmallDrop.point2;
     CGPoint point4 = acrossPointStruct_Tangent2_PerBiseToMainDrop.point2;
     CGPoint point_2_4Center = [LineMath calucateCenterPointBetweenPoint1:point2 withPoint2:point4];
+    CGPoint point_1_3Center = [LineMath calucateCenterPointBetweenPoint1:point1 withPoint2:point3];
     
     LineMath *line_P1_P4 = [[LineMath alloc] initWithPoint1:point1 point2:point4 inView:self];
     LineMath *line_P2_P3 = [[LineMath alloc] initWithPoint1:point2 point2:point3 inView:self];
@@ -332,10 +333,69 @@
     _edge_point2 = point4;
     _smallDrop.edge_point1 = point1;
     _smallDrop.edge_point2 = point3;
-    _line_edgeP1_center = tempLine1;
-    _line_edgeP2_center = tempLine3;
-    _smallDrop.line_edgeP1_center = tempLine2;
-    _smallDrop.line_edgeP2_center = tempLine4;
+    
+    
+    
+    
+    //  计算圆心连线的垂线与圆的交点1,贝塞尔绘制点两侧(大圆)
+    LineMath *line_P2_P2_4Center = [[LineMath alloc] initWithPoint1:point2 point2:point_2_4Center inView:self];
+    AcrossPointStruct acrossPointStruct1 = [self calucateEdgePoint_LeftANDRight_WithOriginCircle:_circleMath withOriginLine:line_P2_P2_4Center];
+    _edge_point1_left = acrossPointStruct1.point1;
+    _edge_point1_right = acrossPointStruct1.point2;
+    
+    LineMath *line_P4_P2_4Center = [[LineMath alloc] initWithPoint1:point4 point2:point_2_4Center inView:self];
+    AcrossPointStruct acrossPointStruct2= [self calucateEdgePoint_LeftANDRight_WithOriginCircle:_circleMath withOriginLine:line_P4_P2_4Center];
+    _edge_point2_left = acrossPointStruct2.point1;
+    _edge_point2_right = acrossPointStruct2.point2;
+    
+    //  计算圆心连线的垂线与圆的交点1,贝塞尔绘制点两侧(小圆)
+    LineMath *line_P1_P1_3Center = [[LineMath alloc] initWithPoint1:point1 point2:point_1_3Center inView:self];
+    AcrossPointStruct acrossPointStruct3 = [self calucateEdgePoint_LeftANDRight_WithOriginCircle:_circleMath withOriginLine:line_P1_P1_3Center];
+    _smallDrop.edge_point1_left = acrossPointStruct3.point1;
+    _smallDrop.edge_point1_right = acrossPointStruct3.point2;
+    
+    LineMath *line_P3_P1_3Center = [[LineMath alloc] initWithPoint1:point3 point2:point_1_3Center inView:self];
+    AcrossPointStruct acrossPointStruct4= [self calucateEdgePoint_LeftANDRight_WithOriginCircle:_circleMath withOriginLine:line_P3_P1_3Center];
+    _smallDrop.edge_point2_left = acrossPointStruct4.point1;
+    _smallDrop.edge_point2_right = acrossPointStruct4.point2;
+}
+
+//  计算圆心连线的垂线与圆的交点1,贝塞尔绘制点两侧（edge_point1_left，edge_point1_right）
+- (AcrossPointStruct)calucateEdgePoint_LeftANDRight_WithOriginCircle:(CircleMath *)circle withOriginLine:(LineMath *)line
+{
+    //  设定一个指定半径的圆，并且求line和该圆的交点acrossPoint
+    CGFloat deltaRadiusRatio = 0.2;
+    CircleMath *tempCircle = [[CircleMath alloc] initWithCenterPoint:circle.centerPoint radius:circle.radius * (1 - deltaRadiusRatio) inView:self];
+    AcrossPointStruct acrossPointStruct = [self calucateCircleAndLineAcrossPoint_withCircle:tempCircle withLine:line];
+    
+    CGPoint acrossPoint;
+    CGFloat x0 = line.point1.x;
+    CGFloat y0 = line.point1.y;
+    CGFloat x1 = line.point2.x;
+    CGFloat y1 = line.point2.y;
+    if (acrossPointStruct.point1.x * 2 < (x0 + x1) && acrossPointStruct.point1.y * 2 < (y0 + y1)) {
+        acrossPoint = acrossPointStruct.point1;
+    }
+    else if (acrossPointStruct.point2.x * 2 < (x0 + x1) && acrossPointStruct.point2.y * 2 < (y0 + y1)) {
+        acrossPoint = acrossPointStruct.point2;
+    }
+    
+    //  计算经过点acrossPoint并且和line垂直的线perBiseLine
+    LineMath *perBiseLine = [[LineMath alloc] init];
+    CGFloat angle = atan(line.k);
+    angle += M_PI/2;
+    if (angle > M_PI/2) {
+        angle -= M_PI;
+    }else if (angle < - M_PI/2){
+        angle += M_PI;
+    }
+    perBiseLine.k = tan(angle);
+    perBiseLine.b = acrossPoint.y - perBiseLine.k * acrossPoint.x;
+    
+    //  计算perBiseLine和circle的两个交点
+    AcrossPointStruct acrossPointStruct1 = [self calucateCircleAndLineAcrossPoint_withCircle:circle withLine:perBiseLine];
+    
+    return acrossPointStruct1;
 }
 
 #pragma mark - 计算Center2Center过圆心的垂直平分线和DropView的交点

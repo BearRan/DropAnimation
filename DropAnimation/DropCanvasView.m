@@ -108,6 +108,7 @@
     
         
     [dropView.bezierPath removeAllPoints];
+    dropView.bezierPath.lineCapStyle = kCGLineCapRound;
     
     //  MainDrop半圆
     LineMath *lineP1_MainCenter = [[LineMath alloc] initWithPoint1:mainEdgePoint1 point2:mainDrop_center inView:self];
