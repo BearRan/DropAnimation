@@ -228,6 +228,39 @@
     [_dropSuperView.lineArray addObject:line_Tangent1];
     
     
+    //  经过大圆圆心的线，并与切线1垂直
+    LineMath *line_Tangent1_PerBiseToMainDrop = [[LineMath alloc] init];
+    CGFloat angle_Tangent1_PerBiseToMainDrop = atan(line_Tangent1.k);
+    angle_Tangent1_PerBiseToMainDrop += M_PI/2;
+    if (angle_Tangent1_PerBiseToMainDrop > M_PI) {
+        angle_Tangent1_PerBiseToMainDrop -= M_PI;
+    }else if (angle_Tangent1_PerBiseToMainDrop < - M_PI){
+        angle_Tangent1_PerBiseToMainDrop += M_PI;
+    }
+    line_Tangent1_PerBiseToMainDrop.k = tan(angle_Tangent1_PerBiseToMainDrop);
+    line_Tangent1_PerBiseToMainDrop.b = _circleMath.centerPoint.y - line_Tangent1_PerBiseToMainDrop.k * _circleMath.centerPoint.x;
+    
+    AcrossPointStruct acrossPointStruct_Tangent1_PerBiseToMainDrop = [self calucateCircleAndLineAcrossPoint_withCircle:_circleMath withLine:line_Tangent1_PerBiseToMainDrop];
+    LineMath *tempLine1 = [[LineMath alloc] initWithPoint1:acrossPointStruct_Tangent1_PerBiseToMainDrop.point1 point2:_circleMath.centerPoint inView:self];
+    [_dropSuperView.lineArray addObject:tempLine1];
+    
+    //  经过小圆圆心的线，并与切线1垂直
+    LineMath *line_Tangent1_PerBiseToSmallDrop = [[LineMath alloc] init];
+    CGFloat angle_Tangent1_PerBiseToSmallDrop = atan(line_Tangent1.k);
+    angle_Tangent1_PerBiseToSmallDrop += M_PI/2;
+    if (angle_Tangent1_PerBiseToSmallDrop > M_PI) {
+        angle_Tangent1_PerBiseToSmallDrop -= M_PI;
+    }else if (angle_Tangent1_PerBiseToSmallDrop < - M_PI){
+        angle_Tangent1_PerBiseToSmallDrop += M_PI;
+    }
+    line_Tangent1_PerBiseToSmallDrop.k = tan(angle_Tangent1_PerBiseToSmallDrop);
+    line_Tangent1_PerBiseToSmallDrop.b = smallDrop_layer.position.y - line_Tangent1_PerBiseToSmallDrop.k * smallDrop_layer.position.x;
+    
+    AcrossPointStruct acrossPointStruct_Tangent1_PerBiseToSmallDrop = [self calucateCircleAndLineAcrossPoint_withCircle:_smallDrop.circleMath withLine:line_Tangent1_PerBiseToSmallDrop];
+    LineMath *tempLine2 = [[LineMath alloc] initWithPoint1:acrossPointStruct_Tangent1_PerBiseToSmallDrop.point1 point2:smallDrop_layer.position inView:self];
+    [_dropSuperView.lineArray addObject:tempLine2];
+    
+    
     //  切线2
     CGFloat angle_TangentLine2 = angle + angleDelta;
     LineMath *line_Tangent2 = [[LineMath alloc] init];
@@ -239,6 +272,39 @@
     line_Tangent2.point2 = acrossPointStruct_Tangent2.point1;
     line_Tangent2.InView = self;
     [_dropSuperView.lineArray addObject:line_Tangent2];
+    
+    
+    //  经过大圆圆心的线，并与切线2垂直
+    LineMath *line_Tangent2_PerBiseToMainDrop = [[LineMath alloc] init];
+    CGFloat angle_Tangent2_PerBiseToMainDrop = atan(line_Tangent2.k);
+    angle_Tangent2_PerBiseToMainDrop += M_PI/2;
+    if (angle_Tangent2_PerBiseToMainDrop > M_PI) {
+        angle_Tangent2_PerBiseToMainDrop -= M_PI;
+    }else if (angle_Tangent2_PerBiseToMainDrop < - M_PI){
+        angle_Tangent2_PerBiseToMainDrop += M_PI;
+    }
+    line_Tangent2_PerBiseToMainDrop.k = tan(angle_Tangent2_PerBiseToMainDrop);
+    line_Tangent2_PerBiseToMainDrop.b = _circleMath.centerPoint.y - line_Tangent2_PerBiseToMainDrop.k * _circleMath.centerPoint.x;
+    
+    AcrossPointStruct acrossPointStruct_Tangent2_PerBiseToMainDrop = [self calucateCircleAndLineAcrossPoint_withCircle:_circleMath withLine:line_Tangent2_PerBiseToMainDrop];
+    LineMath *tempLine3 = [[LineMath alloc] initWithPoint1:acrossPointStruct_Tangent2_PerBiseToMainDrop.point2 point2:_circleMath.centerPoint inView:self];
+    [_dropSuperView.lineArray addObject:tempLine3];
+    
+    //  经过小圆圆心的线，并与切线2垂直
+    LineMath *line_Tangent2_PerBiseToSmallDrop = [[LineMath alloc] init];
+    CGFloat angle_Tangent2_PerBiseToSmallDrop = atan(line_Tangent2.k);
+    angle_Tangent2_PerBiseToSmallDrop += M_PI/2;
+    if (angle_Tangent2_PerBiseToSmallDrop > M_PI) {
+        angle_Tangent2_PerBiseToSmallDrop -= M_PI;
+    }else if (angle_Tangent2_PerBiseToSmallDrop < - M_PI){
+        angle_Tangent2_PerBiseToSmallDrop += M_PI;
+    }
+    line_Tangent2_PerBiseToSmallDrop.k = tan(angle_Tangent2_PerBiseToSmallDrop);
+    line_Tangent2_PerBiseToSmallDrop.b = smallDrop_layer.position.y - line_Tangent2_PerBiseToSmallDrop.k * smallDrop_layer.position.x;
+    
+    AcrossPointStruct acrossPointStruct_Tangent2_PerBiseToSmallDrop = [self calucateCircleAndLineAcrossPoint_withCircle:_smallDrop.circleMath withLine:line_Tangent2_PerBiseToSmallDrop];
+    LineMath *tempLine4 = [[LineMath alloc] initWithPoint1:acrossPointStruct_Tangent2_PerBiseToSmallDrop.point2 point2:smallDrop_layer.position inView:self];
+    [_dropSuperView.lineArray addObject:tempLine4];
 }
 
 #pragma mark - 计算Center2Center过圆心的垂直平分线和DropView的交点

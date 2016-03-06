@@ -34,4 +34,7 @@
 //  计算两点间的距离
 + (CGFloat)calucateDistanceBetweenPoint1:(CGPoint)point1 withPoint2:(CGPoint)point2;
 
+//  计算两条线的交点
++ (CGPoint)calucateAcrossPointBetweenLine1:(LineMath *)line1 withLine2:(LineMath *)line2;
+
 @end

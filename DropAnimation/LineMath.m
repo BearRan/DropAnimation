@@ -73,6 +73,20 @@
     return distance;
 }
 
+//  计算两条线的交点
++ (CGPoint)calucateAcrossPointBetweenLine1:(LineMath *)line1 withLine2:(LineMath *)line2
+{
+    CGFloat b1 = line1.b;
+    CGFloat k1 = line1.k;
+    CGFloat b2 = line2.b;
+    CGFloat k2 = line2.k;
+    CGFloat acrossY = (k2 * b1 - k1 * b2) / (k2 - k1);
+    CGFloat acrossX = (acrossY - b1) / k1;
+    CGPoint acrossPoint = CGPointMake(acrossX, acrossY);
+    
+    return acrossPoint;
+}
+
 
 
 @end
