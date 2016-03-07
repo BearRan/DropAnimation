@@ -415,8 +415,8 @@
     CircleMath *tempCircle1 = [[CircleMath alloc] initWithCenterPoint:centerPoint radius:circleMath.radius inView:self];
     AcrossPointStruct acrossPointStruct1 = [self calucateCircleAndLineAcrossPoint_withCircle:tempCircle1 withLine:perBiseLine];
     
-    LineMath *tempLine11 = [[LineMath alloc] initWithPoint1:acrossPointStruct1.point1 point2:acrossPointStruct1.point2 inView:self];
-    [_dropSuperView.lineArray addObject:tempLine11];
+//    LineMath *tempLine11 = [[LineMath alloc] initWithPoint1:acrossPointStruct1.point1 point2:acrossPointStruct1.point2 inView:self];
+//    [_dropSuperView.lineArray addObject:tempLine11];
     
     return acrossPointStruct1;
 }
