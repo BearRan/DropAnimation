@@ -157,7 +157,7 @@
     //  MainDrop到SmallDrop的贝塞尔曲线
 //    LineMath *tempLine = [[LineMath alloc] initWithPoint1:mainEdgePoint2_Left point2:smallEdgePoint2_Left inView:self];
 //    [_lineArray addObject:tempLine];
-    [dropView.bezierPath addQuadCurveToPoint:smallEdgePoint1_Right controlPoint:bezierControlPoint1];
+//    [dropView.bezierPath addQuadCurveToPoint:smallEdgePoint1_Right controlPoint:bezierControlPoint1];
     
     //  SmallDrop半圆
     LineMath *lineP1_SmallCenter = [[LineMath alloc] initWithPoint1:smallEdgePoint1 point2:smallDrop_center inView:self];

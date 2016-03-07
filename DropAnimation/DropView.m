@@ -339,54 +339,46 @@
     
     //  计算圆心连线的垂线与圆的交点1,贝塞尔绘制点两侧(大圆)
     LineMath *line_P2_MainCenter = [[LineMath alloc] initWithPoint1:point2 point2:_circleMath.centerPoint inView:self];
-    AcrossPointStruct acrossPointStruct1 = [self calucateEdgePoint_LeftANDRight_WithOriginCircle:_circleMath withOriginLine:line_P2_MainCenter needPoint1:YES];
+    AcrossPointStruct acrossPointStruct1 = [self calucateEdgePoint_LeftANDRight_WithCircleMath:_circleMath withOriginLine:line_P2_MainCenter needPoint1:YES];
     _edge_point1_left = acrossPointStruct1.point1;
     _edge_point1_right = acrossPointStruct1.point2;
     
-    LineMath *tempLine5 = [[LineMath alloc] initWithPoint1:_edge_point1_left point2:_edge_point1_right inView:self];
-    [_dropSuperView.lineArray addObject:tempLine5];
     
     LineMath *line_P4_MainCenter = [[LineMath alloc] initWithPoint1:_circleMath.centerPoint point2:point4 inView:self];
-    AcrossPointStruct acrossPointStruct2= [self calucateEdgePoint_LeftANDRight_WithOriginCircle:_circleMath withOriginLine:line_P4_MainCenter needPoint1:NO];
+    AcrossPointStruct acrossPointStruct2= [self calucateEdgePoint_LeftANDRight_WithCircleMath:_circleMath withOriginLine:line_P4_MainCenter needPoint1:NO];
     _edge_point2_left = acrossPointStruct2.point1;
     _edge_point2_right = acrossPointStruct2.point2;
     
-//    NSLog(@"acrossPointStruct1:%@", acrossPointStruct1);
-    
-    LineMath *tempLine6 = [[LineMath alloc] initWithPoint1:_edge_point2_left point2:_edge_point2_right inView:self];
-    [_dropSuperView.lineArray addObject:tempLine6];
+
     
     //  计算圆心连线的垂线与圆的交点1,贝塞尔绘制点两侧(小圆)
     LineMath *line_P1_SmallCenter = [[LineMath alloc] initWithPoint1:point1 point2:smallDrop_layer.position inView:self];
-    AcrossPointStruct acrossPointStruct3 = [self calucateEdgePoint_LeftANDRight_WithOriginCircle:_smallDrop.circleMath withOriginLine:line_P1_SmallCenter needPoint1:YES];
+    AcrossPointStruct acrossPointStruct3 = [self calucateEdgePoint_LeftANDRight_WithCircleMath:_smallDrop.circleMath withOriginLine:line_P1_SmallCenter needPoint1:YES];
     _smallDrop.edge_point1_left = acrossPointStruct3.point1;
     _smallDrop.edge_point1_right = acrossPointStruct3.point2;
     
     LineMath *tempLine7 = [[LineMath alloc] initWithPoint1:point1 point2:smallDrop_layer.position inView:self];
     [_dropSuperView.lineArray addObject:tempLine7];
+
     
-    LineMath *tempLine9 = [[LineMath alloc] initWithPoint1:_smallDrop.edge_point1_left point2:smallDrop_layer.position inView:self];
-    [_dropSuperView.lineArray addObject:tempLine9];
-    
-//
-//    LineMath *tempLine7 = [[LineMath alloc] initWithPoint1:_smallDrop.edge_point1_left point2:_smallDrop.edge_point1_right inView:self];
-//    [_dropSuperView.lineArray addObject:tempLine7];
-//    
     LineMath *line_P3_SmallCenter = [[LineMath alloc] initWithPoint1:point3 point2:smallDrop_layer.position inView:self];
-    AcrossPointStruct acrossPointStruct4= [self calucateEdgePoint_LeftANDRight_WithOriginCircle:_smallDrop.circleMath withOriginLine:line_P3_SmallCenter needPoint1:NO];
+    AcrossPointStruct acrossPointStruct4= [self calucateEdgePoint_LeftANDRight_WithCircleMath:_smallDrop.circleMath withOriginLine:line_P3_SmallCenter needPoint1:NO];
     _smallDrop.edge_point2_left = acrossPointStruct4.point1;
     _smallDrop.edge_point2_right = acrossPointStruct4.point2;
     
-    LineMath *tempLine8 = [[LineMath alloc] initWithPoint1:_smallDrop.edge_point2_left point2:_smallDrop.edge_point2_right inView:self];
-    [_dropSuperView.lineArray addObject:tempLine8];
+    LineMath *tempLine11 = [[LineMath alloc] initWithPoint1:point3 point2:smallDrop_layer.position inView:self];
+    [_dropSuperView.lineArray addObject:tempLine11];
 }
 
 //  计算圆心连线的垂线与圆的交点1,贝塞尔绘制点两侧（edge_point1_left，edge_point1_right）
-- (AcrossPointStruct)calucateEdgePoint_LeftANDRight_WithOriginCircle:(CircleMath *)circle withOriginLine:(LineMath *)line needPoint1:(BOOL)needPoint1
+- (AcrossPointStruct)calucateEdgePoint_LeftANDRight_WithCircleMath:(CircleMath *)circleMath withOriginLine:(LineMath *)line needPoint1:(BOOL)needPoint1
 {
     //  设定一个指定半径的圆，并且求line和该圆的交点acrossPoint
+    CGPoint centerPoint;
+    centerPoint = [self convertPoint:circleMath.centerPoint fromView:circleMath.InView];
+    
     CGFloat deltaRadiusRatio = 0.2;
-    CircleMath *tempCircle = [[CircleMath alloc] initWithCenterPoint:circle.centerPoint radius:circle.radius * (1 - deltaRadiusRatio) inView:self];
+    CircleMath *tempCircle = [[CircleMath alloc] initWithCenterPoint:centerPoint radius:circleMath.radius * (1 - deltaRadiusRatio) inView:self];
     AcrossPointStruct acrossPointStruct = [self calucateCircleAndLineAcrossPoint_withCircle:tempCircle withLine:line];
     
     CGPoint acrossPoint;
@@ -420,7 +412,11 @@
     perBiseLine.b = acrossPoint.y - perBiseLine.k * acrossPoint.x;
     
     //  计算perBiseLine和circle的两个交点
-    AcrossPointStruct acrossPointStruct1 = [self calucateCircleAndLineAcrossPoint_withCircle:circle withLine:perBiseLine];
+    CircleMath *tempCircle1 = [[CircleMath alloc] initWithCenterPoint:centerPoint radius:circleMath.radius inView:self];
+    AcrossPointStruct acrossPointStruct1 = [self calucateCircleAndLineAcrossPoint_withCircle:tempCircle1 withLine:perBiseLine];
+    
+    LineMath *tempLine11 = [[LineMath alloc] initWithPoint1:acrossPointStruct1.point1 point2:acrossPointStruct1.point2 inView:self];
+    [_dropSuperView.lineArray addObject:tempLine11];
     
     return acrossPointStruct1;
 }
